@@ -1,0 +1,58 @@
+name: Build Layered Standard References
+
+on:
+  push:
+    branches-ignore: [ 'temp/*' ]
+    tags:
+      - '*'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-ls-xcp:
+    name: Build Layered Standard References
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: Generate revnumber
+      run: |
+        [[ $GITHUB_REF_TYPE == "tag" ]] && REVNUMBER=${GITHUB_REF:11} || REVNUMBER=${GITHUB_SHA:0:7}
+        echo GITHUB_SHA:      $GITHUB_SHA
+        echo GITHUB_REF_TYPE: $GITHUB_REF_TYPE
+        echo GITHUB_REF:      $GITHUB_REF
+        echo REVNUMBER:       $REVNUMBER
+        echo "REVNUMBER=$REVNUMBER" >> $GITHUB_ENV
+    - name: Create build directory
+      run: |
+        mkdir -p build/schema
+        mkdir -p build/images
+    - name: build layered standard References
+      uses: avattathil/asciidoctor-action@master
+      with:
+        program: "asciidoctor -D build --backend=html5 --attribute=revnumber=${{ env.REVNUMBER }} --attribute=revdate=$(date +%F) docs/index.adoc"
+    - name: Copy resources
+      run: |
+        cp LICENSE.txt build
+        cp schema/*.xsd build/schema
+        cp docs/images/favicon.ico build/images
+    - name: archive layered standard References
+      uses: actions/upload-artifact@v3
+      with:
+        name: FMI-LS-Ref
+        path: build/*
+        if-no-files-found: error
+    - name: extract branch name
+      id: extract_branch
+      shell: bash
+      run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+    - name: deploy
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: peaceiris/actions-gh-pages@v3.9.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: build
+        destination_dir: ${{ steps.extract_branch.outputs.branch }}
+        enable_jekyll: true
