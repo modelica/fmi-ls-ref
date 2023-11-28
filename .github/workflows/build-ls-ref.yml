@@ -38,6 +38,7 @@ jobs:
         cp LICENSE.txt build
         cp schema/*.xsd build/schema
         cp docs/images/favicon.ico build/images
+        cp docs/images/*.svg build/images
     - name: archive layered standard References
       uses: actions/upload-artifact@v3
       with:
