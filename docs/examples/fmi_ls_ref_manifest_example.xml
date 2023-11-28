@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fmiReferences
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardReferenceManifest.xsd"
+	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
+	fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-ref"
+	fmi-ls:fmi-ls-version="1.0.0-rc.1"
+	fmi-ls:fmi-ls-description="Layered Standard providing reference stimuli and results for an FMU.">
+	
+	<Experiment name="Test1" description="Baseline steady-state test"
+		startTime="0.0" stopTime="10.0" stepSize="0.001" tolerance="0.004">
+		<Stimuli source="test1-in.hdf5" type="application/hdf5"/>
+		<References source="test1-ref.csv"/>
+	</Experiment>
+	<Experiment name="Test2" description="Baseline dynamic test" startTime="0.0" stopTime="15.0" stepSize="0.010">
+		<Parameters source="dynamic-params.ssv"/>
+		<Stimuli source="test2-in.csv"/>
+		<References source="test2-ref.csv"/>
+	</Experiment>
+</fmiReferences>

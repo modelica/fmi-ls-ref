@@ -1,0 +1,125 @@
+= Layered Standard References
+:sectnums:
+:sectnumlevels: 5
+:toc: left
+:toc-title: Contents
+:toclevels: 5
+:xrefstyle: short
+:docinfo: shared
+:stylesheet: fmi-spec.css
+:stem: latexmath
+:source-highlighter: highlightjs
+:nofooter:
+:favicon: images/favicon.ico
+:revdate: unreleased
+:revnumber: 0.1.0-alpha.1
+:icons: font
+
+Based on FMI 2.0 and FMI 3.0, this layered standard defines how to provide basic experiments with stimuli and reference results for limited re-validation purposes.
+
+_[Note: Although the document refers to versions 2.0 and 3.0 of the FMI standard, everything described in this document also applies to all subsequent minor versions._
+_For further information on compatibility, see section https://fmi-standard.org/docs/3.0/#VersioningLayered[Versioning and Layered Standards] in the FMI 3.0 specification.]_
+
+{empty} +
+{empty}
+
+Copyright (C) 2012-2023 The Modelica Association Project FMI.
+
+This document is licensed under the Attribution-ShareAlike 4.0 International license.
+The code is released under the 2-Clause BSD License.
+The licenses text can be found in the https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt[LICENSE.txt] file that accompanies this distribution.
+
+{empty}
+
+== Introduction
+
+=== Intent of This Document
+
+TODO
+
+=== How to Read This Document
+
+In key parts of this document, non-normative examples are used to help understand the standard.
+
+Conventions used in this document:
+
+* Non-normative text is given in square brackets in italic font: _[Especially examples are defined in this style.]_
+
+* The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in https://tools.ietf.org/html/rfc2119[RFC 2119] (regardless of formatting and capitalization).
+
+
+[#common-concepts]
+== Layered Standard Manifest File
+
+This layered standard defines additional experiments in the layered standard manifest file.
+<<table-schema-fmi-ls-ref-contents>> shows the content of `fmi-ls-manifest.xml`.
+
+.Manifest Details.
+[[table-schema-fmi-ls-ref-contents]]
+[cols="1,1,1,2",options="header"]
+|====
+|Attribute
+|Namespace
+|Value
+|Description
+
+|`fmi-ls-name`
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `org.fmi-standard.fmi-ls-ref`
+| Name of the layered standard in reverse domain name notation.
+
+|`fmi-ls-version`
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `1.0.0-rc.1`
+| Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
+
+|`fmi-ls-description`
+| `\http://fmi-standard.org/fmi-ls-manifest`
+| `Layered Standard providing reference stimuli and results for an FMU.`
+| String with a brief description of the layered standard that is suitable for display to users.
+
+|====
+
+An example of a manifest file for this layered standard is shown below:
+
+[source, xml]
+----
+include::examples/fmi_ls_ref_manifest_example.xml[]
+----
+
+== Common Concepts
+
+This layered standard provides the capability to include multiple experiment setups, including experiment-related settings, parameter sets, and referece inputs and outputs, in an FMU.
+
+This allows for sufficient information to provide smoke test validation of an FMU in a new simulation environment, and/or the ability to provide multiple parameter sets with an FMU as part of the FMU archive.
+
+=== Structure of the FMU Archive
+
+Any parameter or time-series data files to be included in the FMU are placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
+It is left to implementations on whether sub-directories in this directory are used, or whether all files are placed in the directory itself.
+Details are described in the following sections.
+
+[#figure-fmi-lsref-directory-structure]
+----
+documentation
+   fmi-ls-ref.{txt|html}           // Optional additional documentation
+
+extra/org.fmi-standard.fmi-ls-ref  // Contains files related to this layered standard
+   fmi-ls-manifest.xml             // The layered standard manifest file
+   <arbtrary filename>.ssv         // Example of an SSV parameter file
+   <arbtrary filename>.csv         // Example of a CSV time series file
+   ...
+----
+
+=== Documentation
+
+When shipping an FMU with reference files, it is recommended to provide further information to the importer in the file `documentation/fmi-ls-ref.{txt|html}`.
+For example, this might concern additional information on what experiments are included, their intent, to be expected deviations, areas of interest, etc.
+
+[bibliography]
+== References
+
+- [[[PW13]]] Preston-Werner, T. (2013): **Semantic Versioning 2.0.0**.  https://semver.org/spec/v2.0.0.html
+- [[[ASAP2]]] ASAM MCD-2 MC. https://www.asam.net/standards/detail/mcd-2-mc/
+- [[[RFC2119]]] RFC 2119. https://tools.ietf.org/html/rfc2119
+- [[[LICENSE]]] FMI License text. https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt
