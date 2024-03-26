@@ -17,4 +17,5 @@
 		<Stimuli source="test2-in.csv"/>
 		<References source="test2-ref.csv"/>
 	</Experiment>
+	<Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source"/>
 </fmiReferences>
