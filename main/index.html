@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.22">
 <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 <title>Layered Standard References</title>
 <style>
@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard References</h1>
 <div class="details">
-<span id="revnumber">version 8d6b694,</span>
-<span id="revdate">2023-11-28</span>
+<span id="revnumber">version 0f6837d,</span>
+<span id="revdate">2024-03-26</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -625,7 +625,7 @@ document.addEventListener('keydown', (event) => {
 </p>
 </div>
 <div class="paragraph">
-<p>Copyright &#169; 2012-2023 The Modelica Association Project FMI.</p>
+<p>Copyright &#169; 2012-2024 The Modelica Association Project FMI.</p>
 </div>
 <div class="paragraph">
 <p>This document is licensed under the Attribution-ShareAlike 4.0 International license.
@@ -643,7 +643,8 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 <div class="sect2">
 <h3 id="_intent_of_this_document">1.1. Intent of This Document</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>This document specifies the layered standard FMI-LS-REF, which allows the inclusion of related files into an FMU.
+This includes parameter sets, reference stimuli and results, which can be used in additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.</p>
 </div>
 </div>
 <div class="sect2">
@@ -671,11 +672,11 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 <h2 id="common-concepts">2. Layered Standard Manifest File</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This layered standard defines additional experiments in the layered standard manifest file.
-<a href="#table-schema-fmi-ls-ref-contents">Table 1</a> shows the content of <code>fmi-ls-manifest.xml</code>.</p>
+<p>All information about the related files included with the FMU, as well as additional experiment definitions are contained in the layered standard manifest file.
+<a href="#table-schema-fmi-ls-ref-root-attributes">Table 1</a> shows the attributes of the <code>fmiReferences</code> root element of <code>fmi-ls-manifest.xml</code>.</p>
 </div>
-<table id="table-schema-fmi-ls-ref-contents" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Manifest Details.</caption>
+<table id="table-schema-fmi-ls-ref-root-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Manifest Attributes.</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -706,8 +707,34 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-description</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Layered Standard providing reference stimuli and results for an FMU.</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Layered Standard providing related files, reference stimuli and results for an FMU.</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String with a brief description of the layered standard that is suitable for display to users.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Beside these attributes the root element <code>fmiReferences</code> contains the following elements:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-root-elements" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. <code>fmiReferences</code> element details.</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Experiment&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each element describes one additional experiment setup, including settings, stimuli, references and parameters.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Related&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each element describes one additional related file present in the FMU archive.</p></td>
 </tr>
 </tbody>
 </table>
@@ -735,6 +762,7 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 		&lt;Stimuli source="test2-in.csv"/&gt;
 		&lt;References source="test2-ref.csv"/&gt;
 	&lt;/Experiment&gt;
+	&lt;Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source"/&gt;
 &lt;/fmiReferences&gt;</code></pre>
 </div>
 </div>
@@ -744,27 +772,41 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 <h2 id="_common_concepts">3. Common Concepts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This layered standard provides the capability to include multiple experiment setups, including experiment-related settings, parameter sets, and referece inputs and outputs, in an FMU.</p>
+<p>This layered standard provides the capability to include additional related files, as well as multiple experiment setups, including experiment-related settings, parameter sets, and referece inputs and outputs, in an FMU.</p>
 </div>
 <div class="paragraph">
-<p>This allows for sufficient information to provide smoke test validation of an FMU in a new simulation environment, and/or the ability to provide multiple parameter sets with an FMU as part of the FMU archive.</p>
+<p>This supports the following use cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.</p>
+</li>
+<li>
+<p>The ability to provide multiple parameter sets with an FMU as part of the FMU archive.</p>
+</li>
+<li>
+<p>Inclusion of sufficient information to provide smoke test validation of an FMU in a new simulation environment.</p>
+</li>
+</ul>
 </div>
 <div class="sect2">
 <h3 id="_structure_of_the_fmu_archive">3.1. Structure of the FMU Archive</h3>
 <div class="paragraph">
-<p>Any parameter or time-series data files to be included in the FMU are placed in the following <code>extra</code> directory: <code>/extra/org.fmi-standard.fmi-ls-ref</code>.
+<p>Any related files, including parameter or time-series data files, to be included in the FMU are placed in the following <code>extra</code> directory: <code>/extra/org.fmi-standard.fmi-ls-ref</code>.
 It is left to implementations on whether sub-directories in this directory are used, or whether all files are placed in the directory itself.
 Details are described in the following sections.</p>
 </div>
 <div id="figure-fmi-lsref-directory-structure" class="listingblock">
 <div class="content">
 <pre>documentation
-   fmi-ls-ref.{txt|html}           // Optional additional documentation
+   fmi-ls-ref.{txt|html}              // Optional additional documentation
 
-extra/org.fmi-standard.fmi-ls-ref  // Contains files related to this layered standard
-   fmi-ls-manifest.xml             // The layered standard manifest file
-   &lt;arbtrary filename&gt;.ssv         // Example of an SSV parameter file
-   &lt;arbtrary filename&gt;.csv         // Example of a CSV time series file
+extra/org.fmi-standard.fmi-ls-ref     // Contains files related to this layered standard
+   fmi-ls-manifest.xml                // The layered standard manifest file
+   &lt;arbtrary filename&gt;.ssv            // Example of an SSV parameter file
+   &lt;arbtrary filename&gt;.csv            // Example of a CSV time series file
+   modelica/&lt;arbitrary filename&gt;.mo   // Example of a modelica model source file
    ...</pre>
 </div>
 </div>
@@ -774,6 +816,9 @@ extra/org.fmi-standard.fmi-ls-ref  // Contains files related to this layered sta
 <div class="paragraph">
 <p>When shipping an FMU with reference files, it is recommended to provide further information to the importer in the file <code>documentation/fmi-ls-ref.{txt|html}</code>.
 For example, this might concern additional information on what experiments are included, their intent, to be expected deviations, areas of interest, etc.</p>
+</div>
+<div class="paragraph">
+<p>It is recommended to incorporate a link to the <code>documentation/fmi-ls-ref.{txt|html}</code> file in the main documentation of the FMU.</p>
 </div>
 </div>
 </div>
