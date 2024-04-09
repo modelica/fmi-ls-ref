@@ -107,7 +107,8 @@ include::examples/fmi_ls_ref_manifest_example.xml[]
 
 == Common Concepts
 
-This layered standard provides the capability to include additional related files, as well as multiple experiment setups, including experiment-related settings, parameter sets, and referece inputs and outputs, in an FMU.
+This layered standard provides the capability to include additional related files, as well as multiple experiment setups, in an FMU.
+The experiment setups can include experiment-related settings, parameter sets, reference inputs, and reference outputs.
 
 This supports the following use cases:
 
