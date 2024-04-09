@@ -23,7 +23,7 @@ _For further information on compatibility, see section https://fmi-standard.org/
 {empty} +
 {empty}
 
-Copyright (C) 2012-2023 The Modelica Association Project FMI.
+Copyright (C) 2012-2024 The Modelica Association Project FMI.
 
 This document is licensed under the Attribution-ShareAlike 4.0 International license.
 The code is released under the 2-Clause BSD License.
@@ -35,7 +35,8 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 
 === Intent of This Document
 
-TODO
+This document specifies the layered standard FMI-LS-REF, which allows the inclusion of related files into an FMU.
+This includes parameter sets, reference stimuli and results, which can be used in additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.
 
 === How to Read This Document
 
@@ -51,11 +52,11 @@ Conventions used in this document:
 [#common-concepts]
 == Layered Standard Manifest File
 
-This layered standard defines additional experiments in the layered standard manifest file.
-<<table-schema-fmi-ls-ref-contents>> shows the content of `fmi-ls-manifest.xml`.
+All information about the related files included with the FMU, as well as additional experiment definitions are contained in the layered standard manifest file.
+<<table-schema-fmi-ls-ref-root-attributes>> shows the attributes of the `fmiReferences` root element of `fmi-ls-manifest.xml`.
 
-.Manifest Details.
-[[table-schema-fmi-ls-ref-contents]]
+.Manifest Attributes.
+[[table-schema-fmi-ls-ref-root-attributes]]
 [cols="1,1,1,2",options="header"]
 |====
 |Attribute
@@ -75,8 +76,25 @@ This layered standard defines additional experiments in the layered standard man
 
 |`fmi-ls-description`
 | `\http://fmi-standard.org/fmi-ls-manifest`
-| `Layered Standard providing reference stimuli and results for an FMU.`
+| `Layered Standard providing related files, reference stimuli and results for an FMU.`
 | String with a brief description of the layered standard that is suitable for display to users.
+
+|====
+
+Beside these attributes the root element `fmiReferences` contains the following elements:
+
+.`fmiReferences` element details.
+[[table-schema-fmi-ls-ref-root-elements]]
+[cols="1,3",options="header"]
+|====
+|Element
+|Description
+
+|`<Experiment>`
+|Each element describes one additional experiment setup, including settings, stimuli, references and parameters.
+
+|`<Related>`
+|Each element describes one additional related file present in the FMU archive.
 
 |====
 
@@ -89,26 +107,31 @@ include::examples/fmi_ls_ref_manifest_example.xml[]
 
 == Common Concepts
 
-This layered standard provides the capability to include sets of related files, as well as multiple experiment setups in an FMU.
-
+This layered standard provides the capability to include additional related files, as well as multiple experiment setups, in an FMU.
 The experiment setups can include experiment-related settings, parameter sets, reference inputs, and reference outputs.
-This allows for sufficient information to provide smoke test validation of an FMU in a new simulation environment, or the ability to provide multiple parameter sets with an FMU as part of the FMU archive.
+
+This supports the following use cases:
+
+* Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.
+* The ability to provide multiple parameter sets with an FMU as part of the FMU archive.
+* Inclusion of sufficient information to provide smoke test validation of an FMU in a new simulation environment.
 
 === Structure of the FMU Archive
 
-Any parameter or time-series data files to be included in the FMU are placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
+Any related files, including parameter or time-series data files, to be included in the FMU are placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
 It is left to implementations on whether sub-directories in this directory are used, or whether all files are placed in the directory itself.
 Details are described in the following sections.
 
 [#figure-fmi-lsref-directory-structure]
 ----
 documentation
-   fmi-ls-ref.{txt|html}           // Optional additional documentation
+   fmi-ls-ref.{txt|html}              // Optional additional documentation
 
-extra/org.fmi-standard.fmi-ls-ref  // Contains files related to this layered standard
-   fmi-ls-manifest.xml             // The layered standard manifest file
-   <arbtrary filename>.ssv         // Example of an SSV parameter file
-   <arbtrary filename>.csv         // Example of a CSV time series file
+extra/org.fmi-standard.fmi-ls-ref     // Contains files related to this layered standard
+   fmi-ls-manifest.xml                // The layered standard manifest file
+   <arbtrary filename>.ssv            // Example of an SSV parameter file
+   <arbtrary filename>.csv            // Example of a CSV time series file
+   modelica/<arbitrary filename>.mo   // Example of a modelica model source file
    ...
 ----
 
@@ -116,6 +139,8 @@ extra/org.fmi-standard.fmi-ls-ref  // Contains files related to this layered sta
 
 When shipping an FMU with reference files, it is recommended to provide further information to the importer in the file `documentation/fmi-ls-ref.{txt|html}`.
 For example, this might concern additional information on what experiments are included, their intent, to be expected deviations, areas of interest, etc.
+
+It is recommended to incorporate a link to the `documentation/fmi-ls-ref.{txt|html}` file in the main documentation of the FMU.
 
 [bibliography]
 == References
