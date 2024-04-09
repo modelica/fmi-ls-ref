@@ -89,9 +89,10 @@ include::examples/fmi_ls_ref_manifest_example.xml[]
 
 == Common Concepts
 
-This layered standard provides the capability to include multiple experiment setups, including experiment-related settings, parameter sets and reference inputs and outputs, in an FMU.
+This layered standard provides the capability to include sets of related files, as well as multiple experiment setups in an FMU.
 
-This allows for sufficient information to provide smoke test validation of an FMU in a new simulation environment, and/or the ability to provide multiple parameter sets with an FMU as part of the FMU archive.
+The experiment setups can include experiment-related settings, parameter sets, reference inputs, and reference outputs.
+This allows for sufficient information to provide smoke test validation of an FMU in a new simulation environment, or the ability to provide multiple parameter sets with an FMU as part of the FMU archive.
 
 === Structure of the FMU Archive
 
