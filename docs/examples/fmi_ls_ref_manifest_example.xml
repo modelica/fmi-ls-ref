@@ -9,13 +9,13 @@
 	
 	<Experiment name="Test1" description="Baseline steady-state test"
 		startTime="0.0" stopTime="10.0" stepSize="0.001" tolerance="0.004">
-		<Stimuli source="test1-in.hdf5" type="application/hdf5"/>
+		<Stimuli source="test1-in.csv"/>
 		<References source="test1-ref.csv"/>
 	</Experiment>
 	<Experiment name="Test2" description="Baseline dynamic test" startTime="0.0" stopTime="15.0" stepSize="0.010">
 		<Parameters source="dynamic-params.ssv"/>
 		<Stimuli source="test2-in.csv"/>
-		<References source="test2-ref.csv"/>
+		<References source="test2-ref.hdf5" type="application/hdf5"/>
 	</Experiment>
 	<Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source"/>
 </fmiReferences>
