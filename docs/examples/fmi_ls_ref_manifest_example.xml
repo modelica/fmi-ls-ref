@@ -18,4 +18,8 @@
 		<References source="test2-ref.hdf5" type="application/hdf5"/>
 	</Experiment>
 	<Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source"/>
+	<Related type="application/x-ssp-parameter-set" source="baseline-params.ssv" role="parameter" description="Baseline Model Parameters"/>
+	<Related type="application/x-ssp-parameter-set" source="midend-params.ssv" role="parameter" description="Midend Model Parameters"/>
+	<Related type="application/x-ssp-parameter-set" source="highend-params.ssv" role="parameter" description="Highend Model Parameters"/>
+	<Related type="application/x-ssp-parameter-set" source="dynamic-params.ssv" role="parameter" description="Dynamic Model Parameters"/>
 </fmiReferences>
