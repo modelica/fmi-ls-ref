@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard References</h1>
 <div class="details">
-<span id="revnumber">version 478a438,</span>
-<span id="revdate">2024-04-09</span>
+<span id="revnumber">version 1dee3a9,</span>
+<span id="revdate">2024-05-16</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -754,13 +754,13 @@ This includes parameter sets, reference stimuli and results, which can be used i
 	
 	&lt;Experiment name="Test1" description="Baseline steady-state test"
 		startTime="0.0" stopTime="10.0" stepSize="0.001" tolerance="0.004"&gt;
-		&lt;Stimuli source="test1-in.hdf5" type="application/hdf5"/&gt;
+		&lt;Stimuli source="test1-in.csv"/&gt;
 		&lt;References source="test1-ref.csv"/&gt;
 	&lt;/Experiment&gt;
 	&lt;Experiment name="Test2" description="Baseline dynamic test" startTime="0.0" stopTime="15.0" stepSize="0.010"&gt;
 		&lt;Parameters source="dynamic-params.ssv"/&gt;
 		&lt;Stimuli source="test2-in.csv"/&gt;
-		&lt;References source="test2-ref.csv"/&gt;
+		&lt;References source="test2-ref.hdf5" type="application/hdf5"/&gt;
 	&lt;/Experiment&gt;
 	&lt;Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source"/&gt;
 &lt;/fmiReferences&gt;</code></pre>
