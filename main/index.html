@@ -587,7 +587,7 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard References</h1>
 <div class="details">
-<span id="revnumber">version fa2e12f,</span>
+<span id="revnumber">version 19c8f70,</span>
 <span id="revdate">2024-05-16</span>
 </div>
 <div id="toc" class="toc2">
@@ -604,6 +604,8 @@ document.addEventListener('keydown', (event) => {
 <ul class="sectlevel2">
 <li><a href="#_structure_of_the_fmu_archive">3.1. Structure of the FMU Archive</a></li>
 <li><a href="#_documentation">3.2. Documentation</a></li>
+<li><a href="#_experiment_setup">3.3. Experiment Setup</a></li>
+<li><a href="#_related_files">3.4. Related Files</a></li>
 </ul>
 </li>
 <li><a href="#_references">References</a></li>
@@ -825,6 +827,124 @@ For example, this might concern additional information on what experiments are i
 <div class="paragraph">
 <p>It is recommended to incorporate a link to the <code>documentation/fmi-ls-ref.{txt|html}</code> file in the main documentation of the FMU.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_experiment_setup">3.3. Experiment Setup</h3>
+<div class="paragraph">
+<p>Each experiment setup is described by an <code>&lt;Experiment&gt;</code> element in the layered standard manifest file.</p>
+</div>
+<div class="paragraph">
+<p>The <code>&lt;Experiment&gt;</code> element contains the following attributes:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-experiment-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Experiment Attributes.</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the experiment.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Brief description of the experiment that is suitable for display to users.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startTime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Start time of the experiment setup.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stopTime</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stop time of the experiment setup.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tolerance</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tolerance for the experiment setup.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stepSize</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Step size for the experiment setup.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>&lt;Experiment&gt;</code> element contains the following elements:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-experiment-elements" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. <code>&lt;Experiment&gt;</code> element details.</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Parameters&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters for the experiment setup.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Stimuli&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reference stimuli for the experiment setup.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;References&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reference results for the experiment setup.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_related_files">3.4. Related Files</h3>
+<div class="paragraph">
+<p>Any related files that are not part of the basic FMU, but are helpful in understanding and correctly using the FMU, are described by a <code>&lt;Related&gt;</code> element in the layered standard manifest file.</p>
+</div>
+<div class="paragraph">
+<p>The <code>&lt;Related&gt;</code> element contains the following attributes:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-related-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Related Attributes.</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIME type of the related file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>source</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source of the related file as a URI.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>role</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Role of the related file, e.g., <code>model</code>, <code>requirement</code>, <code>specification</code>, <code>parameter</code>, etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Brief description of the related file that is suitable for display to users.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
