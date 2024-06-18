@@ -1,6 +1,6 @@
 # FMI Layered Standard REF
 
-[![Build Specification](https://github.com/PMSFIT/fmi-ls-ref/actions/workflows/build-ls-ref.yml/badge.svg)](https://github.com/PMSFIT/fmi-ls-ref/actions/workflows/build-ls-ref.yml)
+[![Build Specification](https://github.com/modelica/fmi-ls-ref/actions/workflows/build-ls-ref.yml/badge.svg)](https://github.com/modelica/fmi-ls-ref/actions/workflows/build-ls-ref.yml)
 
 This repository contains a current prototype draft for the FMI Layered
 Standard REF (fmi-ls-ref) based on the [Functional Mock-up Interface][FMI]
@@ -17,4 +17,4 @@ the [FMI][] standard.
 
 [FMI]: https://fmi-standard.org/
 [githubspec]: docs/index.adoc
-[spec]: https://pmsfit.github.io/fmi-ls-ref/main/
+[spec]: https://modelica.github.io/fmi-ls-ref/main/
