@@ -15,7 +15,10 @@
 :revnumber: 0.1.0-alpha.1
 :icons: font
 
-Based on FMI 2.0 and FMI 3.0, this layered standard defines how to provide basic experiments with stimuli and reference results for limited re-validation purposes.
+Based on FMI 2.0 and FMI 3.0, this layered standard allows for the inclusion of related files into an FMU. This includes parameter sets, reference stimuli and results, which can be used in additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.
+
+* defines how to provide basic experiments with stimuli and reference results for limited re-validation purposes.
+* provides files related to the FMU and defines their role such as parameter sets.
 
 _[Note: Although the document refers to versions 2.0 and 3.0 of the FMI standard, everything described in this document also applies to all subsequent minor versions._
 _For further information on compatibility, see section https://fmi-standard.org/docs/3.0/#VersioningLayered[Versioning and Layered Standards] in the FMI 3.0 specification.]_
@@ -23,7 +26,7 @@ _For further information on compatibility, see section https://fmi-standard.org/
 {empty} +
 {empty}
 
-Copyright (C) 2012-2024 The Modelica Association Project FMI.
+Copyright (C) 2024 The Modelica Association Project FMI.
 
 This document is licensed under the Attribution-ShareAlike 4.0 International license.
 The code is released under the 2-Clause BSD License.
@@ -36,7 +39,6 @@ The licenses text can be found in the https://raw.githubusercontent.com/modelica
 === Intent of This Document
 
 This document specifies the layered standard FMI-LS-REF, which allows the inclusion of related files into an FMU.
-This includes parameter sets, reference stimuli and results, which can be used in additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.
 
 === How to Read This Document
 
