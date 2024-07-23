@@ -17,9 +17,6 @@
 
 Based on FMI 2.0 and FMI 3.0, this layered standard allows for the inclusion of related files into an FMU. This includes parameter sets, reference stimuli and results, which can be used in additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.
 
-* defines how to provide basic experiments with stimuli and reference results for limited re-validation purposes.
-* provides files related to the FMU and defines their role such as parameter sets.
-
 _[Note: Although the document refers to versions 2.0 and 3.0 of the FMI standard, everything described in this document also applies to all subsequent minor versions._
 _For further information on compatibility, see section https://fmi-standard.org/docs/3.0/#VersioningLayered[Versioning and Layered Standards] in the FMI 3.0 specification.]_
 
