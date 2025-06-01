@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest" elementFormDefault="qualified" attributeFormDefault="qualified">
-    <xs:import namespace="http://fmi-standard.org/fmi-ls-manifest" schemaLocation="https://raw.githubusercontent.com/modelica/fmi-standard/main/schema/fmi3LayeredStandardManifest.xsd"/>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified">
     <xs:annotation>
         <xs:documentation>
 Copyright(c) 2023-2025 Modelica Association Project "FMI".
@@ -34,66 +33,28 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------------
         </xs:documentation>
     </xs:annotation>
-    <xs:element name="fmiReferences">
+    <xs:element name="Experiments">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Related" minOccurs="0" maxOccurs="unbounded" type="TRelated"/>
+                <xs:element name="Experiment" minOccurs="1" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Parameters" minOccurs="0" type="TParameters"/>
+                            <xs:element name="Stimuli" minOccurs="0" type="TTimeSeriesData"/>
+                            <xs:element name="References" minOccurs="0" type="TTimeSeriesData"/>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="xs:string" use="required"/>
+                        <xs:attribute name="description" type="xs:string"/>
+                        <xs:attribute name="startTime" type="xs:double"/>
+                        <xs:attribute name="stopTime" type="xs:double"/>
+                        <xs:attribute name="tolerance" type="xs:double"/>
+                        <xs:attribute name="stepSize" type="xs:double"/>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
-            <xs:attribute ref="fmi-ls:fmi-ls-name" use="required" fixed="org.fmi-standard.fmi-ls-ref"/>
-            <xs:attribute ref="fmi-ls:fmi-ls-version" use="required"/>
-            <xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered Standard providing reference stimuli and results for an FMU."/>
         </xs:complexType>
     </xs:element>
-    
-    <xs:complexType name="TRelated">
-        <xs:attribute name="type" type="xs:string" use="optional" default="application/octet-stream">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    This attribute specifies the MIME type of the related resource, which
-                    defaults to application/octet-stream to indicate arbitrary binary data.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute name="source" type="xs:anyURI" use="required">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    This attribute indicates the source of the related resource as a URI
-                    (cf. RFC 3986).  For purposes of the resolution of relative URIs
-                    the base URI is the URI of the fmiReference file.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute name="role" use="required">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    This attribute specifies the role of the related resource.
-                </xs:documentation>
-            </xs:annotation>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="document"/>
-                    <xs:enumeration value="requirement"/>
-                    <xs:enumeration value="specification"/>
-                    <xs:enumeration value="model"/>
-                    <xs:enumeration value="parameter"/>
-                    <xs:enumeration value="system"/>
-                    <xs:enumeration value="testcase"/>
-                    <xs:enumeration value="experiment"/>
-                    <xs:enumeration value="result"/>
-                    <xs:enumeration value="method"/>
-                    <xs:enumeration value="rationale"/>
-                    <xs:enumeration value="report"/>
-                    <xs:enumeration value="request"/>
-                    <xs:enumeration value="delivery"/>
-                    <xs:enumeration value="executable"/>
-                    <xs:enumeration value="configuration"/>
-                    <xs:enumeration value="other"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="description" type="xs:string"/>
-    </xs:complexType>
-    
+        
     <xs:complexType name="TParameters">
         <xs:attribute name="type" type="xs:string" use="optional" default="application/x-ssp-parameter-set">
             <xs:annotation>
@@ -132,7 +93,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <xs:documentation xml:lang="en">
                     This attribute indicates the source of the time series data as a URI
                     (cf. RFC 3986).  For purposes of the resolution of relative URIs
-                    the base URI is the URI of the fmiReference file.
+                    the base URI is the URI of the current file.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
