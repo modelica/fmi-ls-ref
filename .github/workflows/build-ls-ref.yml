@@ -12,11 +12,11 @@ jobs:
   build-ls-xcp:
     name: Build Layered Standard References
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Generate revnumber
       run: |
         [[ $GITHUB_REF_TYPE == "tag" ]] && REVNUMBER=${GITHUB_REF:11} || REVNUMBER=${GITHUB_SHA:0:7}
@@ -40,7 +40,7 @@ jobs:
         cp docs/images/favicon.ico build/images
         cp docs/images/*.svg build/images
     - name: archive layered standard References
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: FMI-LS-Ref
         path: build/*
