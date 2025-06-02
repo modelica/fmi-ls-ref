@@ -49,8 +49,18 @@ Conventions used in this document:
 * The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in https://tools.ietf.org/html/rfc2119[RFC 2119] (regardless of formatting and capitalization).
 
 
-[#common-concepts]
-== Layered Standard Manifest File
+== Common Concepts
+
+This layered standard provides the capability to include additional related files, in an FMU, in a structured way.
+These files are described in the layered standard manifest file, which is part of the FMU archive.
+
+This supports the following use cases:
+
+* Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.
+* The ability to provide multiple parameter sets with an FMU as part of the FMU archive.
+* Inclusion of additional experiments that provide sufficient information to enable smoke test validation of an FMU in a new simulation environment.
+
+=== Layered Standard Manifest File
 
 All information about the related files included with the FMU are contained in the layered standard manifest file.
 <<table-schema-fmi-ls-ref-root-attributes>> shows the attributes of the `fmiReferences` root element of `fmi-ls-manifest.xml`.
@@ -102,43 +112,6 @@ An example of a manifest file for this layered standard is shown below:
 include::examples/fmi_ls_ref_manifest_example.xml[]
 ----
 
-== Common Concepts
-
-This layered standard provides the capability to include additional related files, in an FMU, in a structured way.
-These files are described in the layered standard manifest file, which is part of the FMU archive.
-
-This supports the following use cases:
-
-* Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.
-* The ability to provide multiple parameter sets with an FMU as part of the FMU archive.
-* Inclusion of additional experiments that provide sufficient information to enable smoke test validation of an FMU in a new simulation environment.
-
-=== Structure of the FMU Archive
-
-Any related files, including parameter or experiment files, to be included in the FMU are placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
-It is left to implementations on whether sub-directories in this directory are used, or whether all files are placed in the directory itself.
-Details are described in the following sections.
-
-[#figure-fmi-lsref-directory-structure]
-----
-documentation
-   fmi-ls-ref.{txt|html}              // Optional additional documentation
-
-extra/org.fmi-standard.fmi-ls-ref     // Contains files related to this layered standard
-   fmi-ls-manifest.xml                // The layered standard manifest file
-   <arbtrary filename>.ssv            // Example of an SSV parameter file
-   <arbtrary filename>.exp            // Example of a EXP experiment file
-   modelica/<arbitrary filename>.mo   // Example of a modelica model source file
-   ...
-----
-
-=== Documentation
-
-When shipping an FMU with reference files, it is recommended to provide further information to the importer in the file `documentation/fmi-ls-ref.{txt|html}`.
-For example, this might concern additional information on what test cases are included, their intent, to be expected deviations, areas of interest, etc.
-
-It is recommended to incorporate a link to the `documentation/fmi-ls-ref.{txt|html}` file in the main documentation of the FMU.
-
 
 === Related Files
 
@@ -184,7 +157,7 @@ Its value must be one of the following:
 |`model`
 | Model source file, e.g., a Modelica model, that was used to create the FMU.
 |`parameter`
-| Parameter file, e.g., a parameter set in SSV format.
+| Parameter file, e.g., a parameter set in SSV format. See below for rules of application.
 |`system`
 | System file, e.g., a system description file that describes the system in which the FMU is used.
 |`testcase`
@@ -211,22 +184,66 @@ Its value must be one of the following:
 | Other related file, e.g., a file not covered by the other roles.
 |====
 
+=== Structure of the FMU Archive
+
+Any related files, including parameter or experiment files, to be included in the FMU are placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
+It is left to implementations on whether sub-directories in this directory are used, or whether all files are placed in the directory itself.
+Details are described in the following sections.
+
+[#figure-fmi-lsref-directory-structure]
+----
+documentation
+   fmi-ls-ref.{txt|html}              // Optional additional documentation
+
+extra/org.fmi-standard.fmi-ls-ref     // Contains files related to this layered standard
+   fmi-ls-manifest.xml                // The layered standard manifest file
+   <arbtrary filename>.ssv            // Example of an SSV parameter file
+   <arbtrary filename>.exp            // Example of a EXP experiment file
+   modelica/<arbitrary filename>.mo   // Example of a modelica model source file
+   ...
+----
+
+=== Documentation
+
+When shipping an FMU with reference files, it is recommended to provide further information to the importer in the file `documentation/fmi-ls-ref.{txt|html}`.
+For example, this might concern additional information on what test cases are included, their intent, to be expected deviations, areas of interest, etc.
+
+It is recommended to incorporate a link to the `documentation/fmi-ls-ref.{txt|html}` file in the main documentation of the FMU.
+
+=== Specific processing rules
+
+This section details specific processing rules for certain related files, given their roles and/or MIME types.
+
+==== Role parameter
+
+If a related file with role `parameter` is given, the expectation is that the parameter set defined in the related file can be applied as-is to the FMU.
+
+For files with type `application/x-ssp-parameter-set`, i.e. SSV files, the parameter set is applied as if a parameter binding without any prefix or parameter mapping referencing this parameter set were present in a component referencing the FMU, according to the <<SSP20>> standard.
+This implies that the parameter values are applied to any variables of the FMU with identical names.
+
+==== Role experiment
+
+If a related file with role `experiment` is given, the expectation is that the set of experiments defined in the file can be performed on the FMU just using the resources present in the FMU.
+
+For files with type `application/x-ma-ls-experiments`, i.e. EXP files, the experiment is performed as specified in <<fmi-ls-ref-experiments>>, using the format defined therein.
 
 [bibliography]
 == References
 
 - [[[PW13]]] Preston-Werner, T. (2013): **Semantic Versioning 2.0.0**.  https://semver.org/spec/v2.0.0.html
-- [[[ASAP2]]] ASAM MCD-2 MC. https://www.asam.net/standards/detail/mcd-2-mc/
+- [[[SSP20]]] System Structure and Parameterization 2.0. https://ssp-standard.org/docs/2.0/
 - [[[RFC2119]]] RFC 2119. https://tools.ietf.org/html/rfc2119
 - [[[LICENSE]]] FMI License text. https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt
 
 [appendix#fmi-ls-ref-experiments]
 == Experiments Format
 
-This appendix describes the format of the EXP experiment files that can be included in an FMU as part of the layered standard.
-The EXP format is a simple XML-based format that allows the description of experiment setups, including parameters, stimuli, and references.
+This appendix describes the format of experiment files that can be included in an FMU as part of the layered standard.
+The experiments file format is a simple XML-based format that allows the description of experiment setups, including parameters, stimuli, and references.
 
-The EXP format is a valid XML file that contains a root element `<Experiments>` with the following attributes:
+Files using this format shall use the MIME type `application/x-ma-ls-experiments`, and a file type suffix of `.exp`.
+
+An experiments file is a valid XML file that contains a root element `<Experiments>` with the following attributes:
 
 .Experiments Attributes.
 [[table-schema-fmi-ls-ref-experiments-root-attributes]]
@@ -237,20 +254,11 @@ The EXP format is a valid XML file that contains a root element `<Experiments>` 
 |Value
 |Description
 
-|`fmi-ls-name`
-| `\http://fmi-standard.org/fmi-ls-manifest`
-| `org.fmi-standard.fmi-ls-ref`
-| Name of the layered standard in reverse domain name notation.
+|`name`
+| Name of the set of experiments.
 
-|`fmi-ls-version`
-| `\http://fmi-standard.org/fmi-ls-manifest`
-| `1.0.0-rc.1`
-| Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
-
-|`fmi-ls-description`
-| `\http://fmi-standard.org/fmi-ls-manifest`
-| `Layered Standard providing related files for an FMU.`
-| String with a brief description of the layered standard that is suitable for display to users.
+|`description`
+| Brief description of the set of experiments that is suitable for display to users, e.g. indicating the purpose of the set of experiments.
 
 |====
 
@@ -323,3 +331,4 @@ The `<Experiment>` element contains the following elements:
 |`<References>`
 |Reference results for the experiment setup.
 |====
+

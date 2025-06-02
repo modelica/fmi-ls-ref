@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Experiments
+    name="Smoke Tests"
+    description="Simple set of smoke tests to validate the integration of the FMU into a simulation engine."
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardReferenceExperiments.xsd">
     <Experiment name="Test1" description="Baseline steady-state test"
