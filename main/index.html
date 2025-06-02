@@ -587,8 +587,8 @@ document.addEventListener('keydown', (event) => {
 <div id="header">
 <h1>Layered Standard References</h1>
 <div class="details">
-<span id="revnumber">version b3555bb,</span>
-<span id="revdate">2024-06-18</span>
+<span id="revnumber">version d39a4dd,</span>
+<span id="revdate">2025-06-02</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -599,16 +599,22 @@ document.addEventListener('keydown', (event) => {
 <li><a href="#_how_to_read_this_document">1.2. How to Read This Document</a></li>
 </ul>
 </li>
-<li><a href="#common-concepts">2. Layered Standard Manifest File</a></li>
-<li><a href="#_common_concepts">3. Common Concepts</a>
+<li><a href="#_common_concepts">2. Common Concepts</a>
 <ul class="sectlevel2">
-<li><a href="#_structure_of_the_fmu_archive">3.1. Structure of the FMU Archive</a></li>
-<li><a href="#_documentation">3.2. Documentation</a></li>
-<li><a href="#_experiment_setup">3.3. Experiment Setup</a></li>
-<li><a href="#_related_files">3.4. Related Files</a></li>
+<li><a href="#_layered_standard_manifest_file">2.1. Layered Standard Manifest File</a></li>
+<li><a href="#_related_files">2.2. Related Files</a></li>
+<li><a href="#_structure_of_the_fmu_archive">2.3. Structure of the FMU Archive</a></li>
+<li><a href="#_documentation">2.4. Documentation</a></li>
+<li><a href="#_specific_processing_rules">2.5. Specific processing rules</a>
+<ul class="sectlevel3">
+<li><a href="#_role_parameter">2.5.1. Role parameter</a></li>
+<li><a href="#_role_experiment">2.5.2. Role experiment</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_references">References</a></li>
+<li><a href="#fmi-ls-ref-experiments">Appendix A: Experiments Format</a></li>
 </ul>
 </div>
 </div>
@@ -616,7 +622,7 @@ document.addEventListener('keydown', (event) => {
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>Based on FMI 2.0 and FMI 3.0, this layered standard defines how to provide basic experiments with stimuli and reference results for limited re-validation purposes.</p>
+<p>Based on FMI 2.0 and FMI 3.0, this layered standard defines how to provide additional related files inside an FMU with role information.</p>
 </div>
 <div class="paragraph">
 <p><em>[Note: Although the document refers to versions 2.0 and 3.0 of the FMI standard, everything described in this document also applies to all subsequent minor versions.</em>
@@ -627,7 +633,7 @@ document.addEventListener('keydown', (event) => {
 </p>
 </div>
 <div class="paragraph">
-<p>Copyright &#169; 2012-2024 The Modelica Association Project FMI.</p>
+<p>Copyright &#169; 2012-2025 The Modelica Association Project FMI.</p>
 </div>
 <div class="paragraph">
 <p>This document is licensed under the Attribution-ShareAlike 4.0 International license.
@@ -646,7 +652,7 @@ The licenses text can be found in the <a href="https://raw.githubusercontent.com
 <h3 id="_intent_of_this_document">1.1. Intent of This Document</h3>
 <div class="paragraph">
 <p>This document specifies the layered standard FMI-LS-REF, which allows the inclusion of related files into an FMU.
-This includes parameter sets, reference stimuli and results, which can be used in additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.</p>
+This includes parameter sets, additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.</p>
 </div>
 </div>
 <div class="sect2">
@@ -671,10 +677,32 @@ This includes parameter sets, reference stimuli and results, which can be used i
 </div>
 </div>
 <div class="sect1">
-<h2 id="common-concepts">2. Layered Standard Manifest File</h2>
+<h2 id="_common_concepts">2. Common Concepts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>All information about the related files included with the FMU, as well as additional experiment definitions are contained in the layered standard manifest file.
+<p>This layered standard provides the capability to include additional related files, in an FMU, in a structured way.
+These files are described in the layered standard manifest file, which is part of the FMU archive.</p>
+</div>
+<div class="paragraph">
+<p>This supports the following use cases:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.</p>
+</li>
+<li>
+<p>The ability to provide multiple parameter sets with an FMU as part of the FMU archive.</p>
+</li>
+<li>
+<p>Inclusion of additional experiments that provide sufficient information to enable smoke test validation of an FMU in a new simulation environment.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_layered_standard_manifest_file">2.1. Layered Standard Manifest File</h3>
+<div class="paragraph">
+<p>All information about the related files included with the FMU are contained in the layered standard manifest file.
 <a href="#table-schema-fmi-ls-ref-root-attributes">Table 1</a> shows the attributes of the <code>fmiReferences</code> root element of <code>fmi-ls-manifest.xml</code>.</p>
 </div>
 <table id="table-schema-fmi-ls-ref-root-attributes" class="tableblock frame-all grid-all stretch">
@@ -709,7 +737,7 @@ This includes parameter sets, reference stimuli and results, which can be used i
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>fmi-ls-description</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>http://fmi-standard.org/fmi-ls-manifest</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Layered Standard providing related files, reference stimuli and results for an FMU.</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Layered Standard providing related files for an FMU.</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String with a brief description of the layered standard that is suitable for display to users.</p></td>
 </tr>
 </tbody>
@@ -731,10 +759,6 @@ This includes parameter sets, reference stimuli and results, which can be used i
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Experiment&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Each element describes one additional experiment setup, including settings, stimuli, references and parameters.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Related&gt;</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Each element describes one additional related file present in the FMU archive.</p></td>
 </tr>
@@ -752,55 +776,149 @@ This includes parameter sets, reference stimuli and results, which can be used i
 	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
 	fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-ref"
 	fmi-ls:fmi-ls-version="1.0.0-rc.1"
-	fmi-ls:fmi-ls-description="Layered Standard providing reference stimuli and results for an FMU."&gt;
+	fmi-ls:fmi-ls-description="Layered Standard providing related files for an FMU."&gt;
 	
-	&lt;Experiment name="Test1" description="Baseline steady-state test"
-		startTime="0.0" stopTime="10.0" stepSize="0.001" tolerance="0.004"&gt;
-		&lt;Stimuli source="test1-in.csv"/&gt;
-		&lt;References source="test1-ref.csv"/&gt;
-	&lt;/Experiment&gt;
-	&lt;Experiment name="Test2" description="Baseline dynamic test" startTime="0.0" stopTime="15.0" stepSize="0.010"&gt;
-		&lt;Parameters source="dynamic-params.ssv"/&gt;
-		&lt;Stimuli source="test2-in.csv"/&gt;
-		&lt;References source="test2-ref.hdf5" type="application/hdf5"/&gt;
-	&lt;/Experiment&gt;
 	&lt;Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source"/&gt;
 	&lt;Related type="application/x-ssp-parameter-set" source="baseline-params.ssv" role="parameter" description="Baseline Model Parameters"/&gt;
 	&lt;Related type="application/x-ssp-parameter-set" source="midend-params.ssv" role="parameter" description="Midend Model Parameters"/&gt;
 	&lt;Related type="application/x-ssp-parameter-set" source="highend-params.ssv" role="parameter" description="Highend Model Parameters"/&gt;
 	&lt;Related type="application/x-ssp-parameter-set" source="dynamic-params.ssv" role="parameter" description="Dynamic Model Parameters"/&gt;
+	&lt;Related type="application/x-ma-ls-experiments" source="smoke-tests.exp" role="experiment" description="Smoke Tests of FMU"/&gt;
 &lt;/fmiReferences&gt;</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_common_concepts">3. Common Concepts</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_related_files">2.2. Related Files</h3>
 <div class="paragraph">
-<p>This layered standard provides the capability to include additional related files, as well as multiple experiment setups, in an FMU.
-The experiment setups can include experiment-related settings, parameter sets, reference inputs, and reference outputs.</p>
+<p>Any related files that are not part of the basic FMU, but are helpful in understanding and correctly using the FMU, are described by a <code>&lt;Related&gt;</code> element in the layered standard manifest file.</p>
 </div>
 <div class="paragraph">
-<p>This supports the following use cases:</p>
+<p>The <code>&lt;Related&gt;</code> element contains the following attributes:</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.</p>
-</li>
-<li>
-<p>The ability to provide multiple parameter sets with an FMU as part of the FMU archive.</p>
-</li>
-<li>
-<p>Inclusion of sufficient information to provide smoke test validation of an FMU in a new simulation environment.</p>
-</li>
-</ul>
+<table id="table-schema-fmi-ls-ref-related-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Related Attributes.</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MIME type of the related file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>source</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source of the related file as a URI.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>role</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Role of the related file, e.g., <code>model</code>, <code>requirement</code>, <code>specification</code>, <code>parameter</code>, <code>experiment</code>, etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Brief description of the related file that is suitable for display to users.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>role</code> attribute is used to indicate the purpose of the related file.
+Its value must be one of the following:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-related-roles" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Role Values.</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Role</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>document</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Document file, e.g., a documentation file, or any other document related to the FMU that does not fit into the other categories.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>requirement</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Requirement file, e.g., a requirements specification document.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>specification</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specification file, e.g., a design specification document that describes the FMU design.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>model</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Model source file, e.g., a Modelica model, that was used to create the FMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>parameter</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameter file, e.g., a parameter set in SSV format. See below for rules of application.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>system</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System file, e.g., a system description file that describes the system in which the FMU is used.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>testcase</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test case file, e.g., a set of test cases that are used as part of the overall simulation task.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>experiment</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Experiment file, e.g., an experiment setup in the EXP format described in <a href="#fmi-ls-ref-experiments">Appendix A</a>, that can be used to perform basic validation (i.e. a smoke test) of the FMU in a simulation environment.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Result file, e.g., a result file that contains the results of an experiment or simulation run.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>method</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Method file, e.g., a method description file that describes the method used to create the FMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>rationale</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rationale file, e.g., a rationale document that explains the design decisions made during the development of the FMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>report</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Report file, e.g., a validation, verification or result report.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>request</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Request file, e.g., a simulation request that lead to the simulation task and hence to the creation of the FMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>delivery</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delivery file, e.g., a simulation delivery document that describes the delivery of the FMU or overall simulation task.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>executable</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Executable file, e.g., a binary executable file.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>configuration</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration file, e.g., a configuration file that describes the configuration of a simulation environment or other related software system.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>other</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Other related file, e.g., a file not covered by the other roles.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
-<h3 id="_structure_of_the_fmu_archive">3.1. Structure of the FMU Archive</h3>
+<h3 id="_structure_of_the_fmu_archive">2.3. Structure of the FMU Archive</h3>
 <div class="paragraph">
-<p>Any related files, including parameter or time-series data files, to be included in the FMU are placed in the following <code>extra</code> directory: <code>/extra/org.fmi-standard.fmi-ls-ref</code>.
+<p>Any related files, including parameter or experiment files, to be included in the FMU are placed in the following <code>extra</code> directory: <code>/extra/org.fmi-standard.fmi-ls-ref</code>.
 It is left to implementations on whether sub-directories in this directory are used, or whether all files are placed in the directory itself.
 Details are described in the following sections.</p>
 </div>
@@ -812,24 +930,154 @@ Details are described in the following sections.</p>
 extra/org.fmi-standard.fmi-ls-ref     // Contains files related to this layered standard
    fmi-ls-manifest.xml                // The layered standard manifest file
    &lt;arbtrary filename&gt;.ssv            // Example of an SSV parameter file
-   &lt;arbtrary filename&gt;.csv            // Example of a CSV time series file
+   &lt;arbtrary filename&gt;.exp            // Example of a EXP experiment file
    modelica/&lt;arbitrary filename&gt;.mo   // Example of a modelica model source file
    ...</pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_documentation">3.2. Documentation</h3>
+<h3 id="_documentation">2.4. Documentation</h3>
 <div class="paragraph">
 <p>When shipping an FMU with reference files, it is recommended to provide further information to the importer in the file <code>documentation/fmi-ls-ref.{txt|html}</code>.
-For example, this might concern additional information on what experiments are included, their intent, to be expected deviations, areas of interest, etc.</p>
+For example, this might concern additional information on what test cases are included, their intent, to be expected deviations, areas of interest, etc.</p>
 </div>
 <div class="paragraph">
 <p>It is recommended to incorporate a link to the <code>documentation/fmi-ls-ref.{txt|html}</code> file in the main documentation of the FMU.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_experiment_setup">3.3. Experiment Setup</h3>
+<h3 id="_specific_processing_rules">2.5. Specific processing rules</h3>
+<div class="paragraph">
+<p>This section details specific processing rules for certain related files, given their roles and/or MIME types.</p>
+</div>
+<div class="sect3">
+<h4 id="_role_parameter">2.5.1. Role parameter</h4>
+<div class="paragraph">
+<p>If a related file with role <code>parameter</code> is given, the expectation is that the parameter set defined in the related file can be applied as-is to the FMU.</p>
+</div>
+<div class="paragraph">
+<p>For files with type <code>application/x-ssp-parameter-set</code>, i.e. SSV files, the parameter set is applied as if a parameter binding without any prefix or parameter mapping referencing this parameter set were present in a component referencing the FMU, according to the <a href="#SSP20">[SSP20]</a> standard.
+This implies that the parameter values are applied to any variables of the FMU with identical names.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_role_experiment">2.5.2. Role experiment</h4>
+<div class="paragraph">
+<p>If a related file with role <code>experiment</code> is given, the expectation is that the set of experiments defined in the file can be performed on the FMU just using the resources present in the FMU.</p>
+</div>
+<div class="paragraph">
+<p>For files with type <code>application/x-ma-ls-experiments</code>, i.e. EXP files, the experiment is performed as specified in <a href="#fmi-ls-ref-experiments">Appendix A</a>, using the format defined therein.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_references">References</h2>
+<div class="sectionbody">
+<div class="ulist bibliography">
+<ul class="bibliography">
+<li>
+<p><a id="PW13"></a>[PW13] Preston-Werner, T. (2013): <strong>Semantic Versioning 2.0.0</strong>.  <a href="https://semver.org/spec/v2.0.0.html" class="bare">https://semver.org/spec/v2.0.0.html</a></p>
+</li>
+<li>
+<p><a id="SSP20"></a>[SSP20] System Structure and Parameterization 2.0. <a href="https://ssp-standard.org/docs/2.0/" class="bare">https://ssp-standard.org/docs/2.0/</a></p>
+</li>
+<li>
+<p><a id="RFC2119"></a>[RFC2119] RFC 2119. <a href="https://tools.ietf.org/html/rfc2119" class="bare">https://tools.ietf.org/html/rfc2119</a></p>
+</li>
+<li>
+<p><a id="LICENSE"></a>[LICENSE] FMI License text. <a href="https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt" class="bare">https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="fmi-ls-ref-experiments">Appendix A: Experiments Format</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This appendix describes the format of experiment files that can be included in an FMU as part of the layered standard.
+The experiments file format is a simple XML-based format that allows the description of experiment setups, including parameters, stimuli, and references.</p>
+</div>
+<div class="paragraph">
+<p>Files using this format shall use the MIME type <code>application/x-ma-ls-experiments</code>, and a file type suffix of <code>.exp</code>.</p>
+</div>
+<div class="paragraph">
+<p>An experiments file is a valid XML file that contains a root element <code>&lt;Experiments&gt;</code> with the following attributes:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-experiments-root-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Experiments Attributes.</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Namespace</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the set of experiments.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Brief description of the set of experiments that is suitable for display to users, e.g. indicating the purpose of the set of experiments.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Beside these attributes the root element <code>&lt;Experiments&gt;</code> contains the following elements:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-experiments-root-elements" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. <code>&lt;Experiments&gt;</code> element details.</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Experiment&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each element describes one experiment setup.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>An example of an experiments file for this layered standard is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Experiments
+    name="Smoke Tests"
+    description="Simple set of smoke tests to validate the integration of the FMU into a simulation engine."
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardReferenceExperiments.xsd"&gt;
+    &lt;Experiment name="Test1" description="Baseline steady-state test"
+        startTime="0.0" stopTime="10.0" stepSize="0.001" tolerance="0.004"&gt;
+        &lt;Stimuli source="test1-in.csv"/&gt;
+        &lt;References source="test1-ref.csv"/&gt;
+    &lt;/Experiment&gt;
+    &lt;Experiment name="Test2" description="Baseline dynamic test" startTime="0.0" stopTime="15.0" stepSize="0.010"&gt;
+        &lt;Parameters source="dynamic-params.ssv"/&gt;
+        &lt;Stimuli source="test2-in.csv"/&gt;
+        &lt;References source="test2-ref.hdf5" type="application/hdf5"/&gt;
+    &lt;/Experiment&gt;
+&lt;/Experiments&gt;</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Each experiment setup is described by an <code>&lt;Experiment&gt;</code> element in the layered standard manifest file.</p>
 </div>
@@ -837,7 +1085,7 @@ For example, this might concern additional information on what experiments are i
 <p>The <code>&lt;Experiment&gt;</code> element contains the following attributes:</p>
 </div>
 <table id="table-schema-fmi-ls-ref-experiment-attributes" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Experiment Attributes.</caption>
+<caption class="title">Table 7. Experiment Attributes.</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
@@ -879,7 +1127,7 @@ For example, this might concern additional information on what experiments are i
 <p>The <code>&lt;Experiment&gt;</code> element contains the following elements:</p>
 </div>
 <table id="table-schema-fmi-ls-ref-experiment-elements" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. <code>&lt;Experiment&gt;</code> element details.</caption>
+<caption class="title">Table 8. <code>&lt;Experiment&gt;</code> element details.</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -905,68 +1153,6 @@ For example, this might concern additional information on what experiments are i
 </tr>
 </tbody>
 </table>
-</div>
-<div class="sect2">
-<h3 id="_related_files">3.4. Related Files</h3>
-<div class="paragraph">
-<p>Any related files that are not part of the basic FMU, but are helpful in understanding and correctly using the FMU, are described by a <code>&lt;Related&gt;</code> element in the layered standard manifest file.</p>
-</div>
-<div class="paragraph">
-<p>The <code>&lt;Related&gt;</code> element contains the following attributes:</p>
-</div>
-<table id="table-schema-fmi-ls-ref-related-attributes" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Related Attributes.</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Attribute</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MIME type of the related file.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>source</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Source of the related file as a URI.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>role</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Role of the related file, e.g., <code>model</code>, <code>requirement</code>, <code>specification</code>, <code>parameter</code>, etc.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Brief description of the related file that is suitable for display to users.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_references">References</h2>
-<div class="sectionbody">
-<div class="ulist bibliography">
-<ul class="bibliography">
-<li>
-<p><a id="PW13"></a>[PW13] Preston-Werner, T. (2013): <strong>Semantic Versioning 2.0.0</strong>.  <a href="https://semver.org/spec/v2.0.0.html" class="bare">https://semver.org/spec/v2.0.0.html</a></p>
-</li>
-<li>
-<p><a id="ASAP2"></a>[ASAP2] ASAM MCD-2 MC. <a href="https://www.asam.net/standards/detail/mcd-2-mc/" class="bare">https://www.asam.net/standards/detail/mcd-2-mc/</a></p>
-</li>
-<li>
-<p><a id="RFC2119"></a>[RFC2119] RFC 2119. <a href="https://tools.ietf.org/html/rfc2119" class="bare">https://tools.ietf.org/html/rfc2119</a></p>
-</li>
-<li>
-<p><a id="LICENSE"></a>[LICENSE] FMI License text. <a href="https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt" class="bare">https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt</a></p>
-</li>
-</ul>
-</div>
 </div>
 </div>
 </div>
