@@ -149,7 +149,12 @@ No base requirements on supported URI schemes are given in this layered standard
 |====
 
 The `role` attribute is used to indicate the purpose of the related file.
-Its value must be one of the following:
+A role can consist of a main role and optionally one or more sub-roles, separated by a forward slash (`/`), that indicate more specific purposes of the related file.
+For example, the role `experiment/smoke-test` indicates that the related file is an experiment file that can be used to perform a smoke test validation of the FMU, while the role `experiment/validation` indicates that the related file is an experiment file that can be used to perform a detailed validation of the FMU.
+Similarly, the role `serialized-state/x86_64-windows` would indicate that the related file is a serialized state file for the FMI 3.0 64-bit x86 Windows platform.
+Whether sub-roles are defined for a main role is dependent on the main role and is described in the respective role definition below.
+
+Valid role values are defined in the following table:
 
 .Role Values.
 [[table-schema-fmi-ls-ref-related-roles]]
@@ -180,6 +185,9 @@ Its value must be one of the following:
 
 |`experiment`
 | Experiment file, e.g., an experiment setup in the EXP format described in <<fmi-ls-ref-experiments>>, that can be used to perform basic validation (i.e. a smoke test) of the FMU in a simulation environment.
+The role can be further specified using sub-roles, e.g., `experiment/smoke-test`, `experiment/validation`, or `experiment/uncertainty-analysis`, referring to the purpose of the experiment file.
+If no sub-role is given, the experiment file is assumed to be usable for basic validation (i.e. a smoke test).
+Only the following sub-roles are defined: `smoke-test`, `validation`, and `uncertainty-analysis`.
 
 |`result`
 | Result file, e.g., a result file that contains the results of an experiment or simulation run.
@@ -207,6 +215,11 @@ Its value must be one of the following:
 
 |`signature`
 | Signature file, e.g., a digital signature file that can be used to verify the authenticity of the FMU, related files, or any part thereof. Note that this layered standard does not mandate any specific signature format or method, nor what exactly is signed.
+
+|`serialized-state`
+| Serialized state file, e.g., a file that contains a serialized state of the FMU, suitable for restoring the FMU to this state using the FMI functions for state serialization and deserialization and state setting.
+When the serialized state file is not platform independent, then the platform should be indicated in a sub-role (e.g., `serialized-state/x86_64-windows` for FMI 3.0 64-bit x86 Windows platform).
+The identifier to use for the sub-role is the same as used in the respective FMI standard for platform identification.
 
 |`other`
 | Other related file, e.g., a file not covered by the other roles.
