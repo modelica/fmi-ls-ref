@@ -264,7 +264,11 @@ This implies that the parameter values are applied to any variables of the FMU w
 
 ==== Role experiment
 
-If a related file with role `experiment` is given, the expectation is that the set of experiments defined in the file can be performed on the FMU just using the resources present in the FMU.
+If a related file with main role `experiment` is given, the expectation is that the set of experiments defined in the file can be performed on the FMU just using the resources present in the FMU.
+
+If no sub-role is given, or if the sub-role `smoke-test` is given, the expectation is that the experiment(s) defined in the file can be used to perform a basic validation (i.e., smoke test) of the FMU in a simulation environment.
+If the sub-role `validation` is given, the expectation is that the experiment(s) defined in the file can be used to perform a detailed validation of the FMU in a simulation environment.
+If the sub-role `uncertainty-analysis` is given, the expectation is that the experiment(s) defined in the file can be used to perform an uncertainty analysis of the FMU in a simulation environment.
 
 For files with type `application/x-ma-ls-experiments`, i.e. EXP files, the experiment is performed as specified in <<fmi-ls-ref-experiments>>, using the format defined therein.
 
