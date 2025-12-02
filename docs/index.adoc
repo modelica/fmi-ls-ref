@@ -187,6 +187,9 @@ Its value must be one of the following:
 |`configuration`
 | Configuration file, e.g., a configuration file that describes the configuration of a simulation environment or other related software system.
 
+|`signature`
+| Signature file, e.g., a digital signature file that can be used to verify the authenticity of the FMU, related files, or any part thereof. Note that this layered standard does not mandate any specific signature format or method, nor what exactly is signed.
+
 |`other`
 | Other related file, e.g., a file not covered by the other roles.
 |====
