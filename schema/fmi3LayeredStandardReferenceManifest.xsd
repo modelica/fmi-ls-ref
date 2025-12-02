@@ -41,7 +41,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </xs:sequence>
             <xs:attribute ref="fmi-ls:fmi-ls-name" use="required" fixed="org.fmi-standard.fmi-ls-ref"/>
             <xs:attribute ref="fmi-ls:fmi-ls-version" use="required"/>
-            <xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered Standard providing reference stimuli and results for an FMU."/>
+            <xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered Standard providing information on related files included in an FMU."/>
         </xs:complexType>
     </xs:element>
     
@@ -71,70 +71,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:enumeration value="document"/>
-                    <xs:enumeration value="requirement"/>
-                    <xs:enumeration value="specification"/>
-                    <xs:enumeration value="model"/>
-                    <xs:enumeration value="parameter"/>
-                    <xs:enumeration value="system"/>
-                    <xs:enumeration value="testcase"/>
-                    <xs:enumeration value="experiment"/>
-                    <xs:enumeration value="result"/>
-                    <xs:enumeration value="method"/>
-                    <xs:enumeration value="rationale"/>
-                    <xs:enumeration value="report"/>
-                    <xs:enumeration value="request"/>
-                    <xs:enumeration value="delivery"/>
-                    <xs:enumeration value="executable"/>
-                    <xs:enumeration value="configuration"/>
-                    <xs:enumeration value="other"/>
+                    <xs:pattern value="(document|requirement|specification|model|parameter|system|testcase|experiment(/(smoke-test|validation|uncertainty-analysis))?|result|method|rationale|report|request|delivery|configuration|signature|serialized-state(/.*)?|other)"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
         <xs:attribute name="description" type="xs:string"/>
-    </xs:complexType>
-    
-    <xs:complexType name="TParameters">
-        <xs:attribute name="type" type="xs:string" use="optional" default="application/x-ssp-parameter-set">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    This attribute specifies the MIME type of the parameter data source, which
-                    defaults to application/x-ssp-parameter-set to indicate the SSV file format
-                    as specified in the SSP standard. No further types are currently defined, 
-                    but can of course be added at a later date.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute name="source" type="xs:anyURI" use="required">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    This attribute indicates the source of the parameter source as a URI
-                    (cf. RFC 3986).  For purposes of the resolution of relative URIs
-                    the base URI is the URI of the fmiReference file.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-    </xs:complexType>
-
-    <xs:complexType name="TTimeSeriesData">
-        <xs:attribute name="type" type="xs:string" use="optional" default="text/csv">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    This attribute specifies the MIME type of the time series data source, which
-                    defaults to text/csv to indicate the CSV file format as specified in XXX.
-                    No further types are currently defined, but can of course be added at a later
-                    date, e.g. for pre-existing time series file formats, like HDF5, MDF, etc.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute name="source" type="xs:anyURI" use="required">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    This attribute indicates the source of the time series data as a URI
-                    (cf. RFC 3986).  For purposes of the resolution of relative URIs
-                    the base URI is the URI of the fmiReference file.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
     </xs:complexType>
 </xs:schema>
