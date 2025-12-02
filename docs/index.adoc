@@ -115,6 +115,12 @@ include::examples/fmi_ls_ref_manifest_example.xml[]
 === Related Files
 
 Any related files that are not part of the basic FMU, but are helpful in understanding and correctly using the FMU, are described by a `<Related>` element in the layered standard manifest file.
+Each related file is described by one `<Related>` element in the layered standard manifest file.
+It is up to the FMU creator or last modifier to decide which related files to include in the FMU, and which of these files to describe in the layered standard manifest file.
+Files can be included in the FMU due to other layered standards, or simply as additional files in the FMU archive.
+In both cases the related files can be described in the layered standard manifest file.
+
+Due to the fact that such files might be manipulated in later stages by tools not aware of this layered standard, an importer should be prepared to handle related files that are described in the layered standard manifest file, but are not present in the FMU archive, as well as related files that are present in the FMU archive, but are not described in the layered standard manifest file.
 
 The `<Related>` element contains the following attributes:
 
@@ -129,6 +135,11 @@ The `<Related>` element contains the following attributes:
 
 |`source`
 |Source of the related file as a URI.
+Any relative URIs are to be interpreted relative to the location of the layered standard manifest file in the FMU archive, i.e., the base URI for resolution is the URI of the layered standard manifest file.
+This allows the referencing of related files included in other places of the FMU archive, besides the `extra/org.fmi-standard.fmi-ls-ref` directory described below.
+If absolute URIs are used, it is left to the importer to decide how to handle these URIs, e.g., whether to try to download the file from the given URI, or to ignore the related file, or handle it in some other way.
+Similarly the set of allowed URI schemes is dependent on the importer.
+No base requirements on supported URI schemes are given in this layered standard, apart from the fact that relative URIs pointing to files inside the FMU archive are always supported.
 
 |`role`
 |Role of the related file, e.g., `model`, `requirement`, `specification`, `parameter`, `experiment`, etc.
@@ -203,9 +214,12 @@ Its value must be one of the following:
 
 === Structure of the FMU Archive
 
-Any related files, including parameter or experiment files, to be included in the FMU are placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
+Any related files, including parameter or experiment files, to be included in the FMU, that are not already included due to other layered standards are to be placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
 It is left to implementations on whether sub-directories in this directory are used, or whether all files are placed in the directory itself.
-Details are described in the following sections.
+Note that files related to other layered standards are to be placed in the respective directories for these layered standards, as specified in the respective layered standard documents.
+They can be referenced using relative URIs in the `source` attribute of the `<Related>` element, via paths relative to the `extra/org.fmi-standard.fmi-ls-ref` directory.
+For example `modelica/MyModel.mo` would refer to the file `/extra/org.fmi-standard.fmi-ls-ref/modelica/MyModel.mo` in the FMU archive, and `../org.fmi-standard.fmi-ssp/model.ssd` would refer to the file `/extra/org.fmi-standard.fmi-ssp/model.ssd` in the FMU archive, assuming a layered standard named `org.fmi-standard.fmi-ssp` is also used in the FMU.
+Similarly, `../../documentation/additional_info.txt` would refer to the file `/documentation/additional_info.txt` in the FMU archive.
 
 [#figure-fmi-lsref-directory-structure]
 ----
