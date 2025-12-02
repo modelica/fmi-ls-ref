@@ -48,12 +48,19 @@ NOTE: Especially examples are defined in this style.
 
 * The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in https://tools.ietf.org/html/rfc2119[RFC 2119] (regardless of formatting and capitalization).
 
-== Common Concepts
+== Introduction
 
-This layered standard provides the capability to include additional related files, in an FMU, in a structured way.
+This layered standard provides the capability to clearly designate the roles of additional related files included in an FMU in a structured way.
 These files are described in the layered standard manifest file, which is part of the FMU archive.
+In this way, an FMU can be shipped together with related files that are helpful in understanding and correctly using the FMU in a recognizable way.
 
-This supports the following use cases:
+Note that this layered standard does not mandate the inclusion of any related files with an FMU.
+It only provides a structured way to describe such files, if they are included.
+The included related files can be of arbitrary types, as long as their roles are described in the layered standard manifest file.
+This layered standard can be used in addition to other layered standards, and allows the central description of related files included with the FMU, independently of their use in other layered standards.
+Thus an implementation can treat the related files described in this layered standard in a uniform way, regardless of whether they are used in other layered standards or not, and regardless of whether the other layered standards are supported by the implementation or not.
+
+This supports the following use cases, among others:
 
 * Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.
 * The ability to provide multiple parameter sets with an FMU as part of the FMU archive.
@@ -77,12 +84,12 @@ All information about the related files included with the FMU are contained in t
 
 |`fmi-ls-version`
 |`\http://fmi-standard.org/fmi-ls-manifest`
-|`1.0.0-rc.1`
+|`1.0.0-alpha.1`
 |Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
 
 |`fmi-ls-description`
 |`\http://fmi-standard.org/fmi-ls-manifest`
-|`Layered Standard providing related files for an FMU.`
+|`Layered Standard providing information on related files included in an FMU.`
 |String with a brief description of the layered standard that is suitable for display to users.
 |====
 
