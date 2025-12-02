@@ -178,7 +178,7 @@ Valid role values are defined in the following table:
 | Parameter file, e.g., a parameter set in SSV format. See below for rules of application.
 
 |`system`
-| System file, e.g., a system description file that describes the system in which the FMU is used.
+| System file, e.g., a system description file - for example in SSD format - that describes the system in which the FMU is used.
 
 |`testcase`
 | Test case file, e.g., a set of test cases that are used as part of the overall simulation task.
@@ -206,9 +206,6 @@ Only the following sub-roles are defined: `smoke-test`, `validation`, and `uncer
 
 |`delivery`
 | Delivery file, e.g., a simulation delivery document that describes the delivery of the FMU or overall simulation task.
-
-|`executable`
-| Executable file, e.g., a binary executable file.
 
 |`configuration`
 | Configuration file, e.g., a configuration file that describes the configuration of a simulation environment or other related software system.
