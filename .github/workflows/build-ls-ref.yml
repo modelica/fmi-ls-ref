@@ -3,20 +3,20 @@ name: Build Layered Standard References
 on:
   push:
     branches-ignore: [ 'temp/*' ]
-    tags:
-      - '*'
+    tags: ['*']
   pull_request:
     branches: [ main ]
 
 jobs:
-  build-ls-xcp:
-    name: Build Layered Standard References
 
     runs-on: ubuntu-24.04
 
     steps:
-    - name: checkout
-      uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4.1.7
+      with:
+        submodules: recursive
+
     - name: Generate revnumber
       run: |
         [[ $GITHUB_REF_TYPE == "tag" ]] && REVNUMBER=${GITHUB_REF:11} || REVNUMBER=${GITHUB_SHA:0:7}
@@ -25,26 +25,28 @@ jobs:
         echo GITHUB_REF:      $GITHUB_REF
         echo REVNUMBER:       $REVNUMBER
         echo "REVNUMBER=$REVNUMBER" >> $GITHUB_ENV
-    - name: Create build directory
-      run: |
-        mkdir -p build/schema
-        mkdir -p build/images
-    - name: build layered standard References
+
+    - name: Generate HTML
       uses: avattathil/asciidoctor-action@master
       with:
-        program: "asciidoctor -D build --backend=html5 --attribute=revnumber=${{ env.REVNUMBER }} --attribute=revdate=$(date +%F) docs/index.adoc"
-    - name: Copy resources
-      run: |
-        cp LICENSE.txt build
-        cp schema/*.xsd build/schema
-        cp docs/images/favicon.ico build/images
-        cp docs/images/*.svg build/images
-    - name: archive layered standard References
-      uses: actions/upload-artifact@v4
+        program: asciidoctor --attribute=revnumber=${{ env.REVNUMBER }} --attribute=revdate=$(date +%F) docs/index.adoc
+
+    - name: Copy license
+      run: cp LICENSE.txt docs
+
+    - name: Create ZIP archive
+      uses: actions/upload-artifact@v5
       with:
-        name: FMI-LS-Ref
-        path: build/*
+        name: FMI-LS-Struct-${{ env.REVNUMBER }}
+        path: |
+          docs/index.html
+          docs/LICENSE.txt
+          docs/images/*.svg
+          docs/theme/css/*.css
+          docs/theme/images/*.svg
+          docs/theme/js/*.js
         if-no-files-found: error
+
     - name: extract branch name
       id: extract_branch
       shell: bash
