@@ -4,32 +4,30 @@
 :toc: left
 :toc-title: Contents
 :toclevels: 5
+:idprefix:
+:idseparator: -
 :xrefstyle: short
 :docinfo: shared
-:stylesheet: fmi-spec.css
+:docinfodir: theme/docinfo
 :stem: latexmath
 :source-highlighter: highlightjs
+:highlightjs-theme: github
 :nofooter:
-:favicon: images/favicon.ico
-:revdate: unreleased
-:revnumber: 0.1.0-alpha.1
 :icons: font
+:website-url: https://fmi-standard.org/
+:repo-url: https://github.com/modelica/fmi-ls-ref
+:logo: FMI
 
 Based on FMI 2.0 and FMI 3.0, this layered standard defines how to provide additional related files inside an FMU with role information.
 
-_[Note: Although the document refers to versions 2.0 and 3.0 of the FMI standard, everything described in this document also applies to all subsequent minor versions._
-_For further information on compatibility, see section https://fmi-standard.org/docs/3.0/#VersioningLayered[Versioning and Layered Standards] in the FMI 3.0 specification.]_
-
-{empty} +
-{empty}
+NOTE: Note: Although the document refers to versions 2.0 and 3.0 of the FMI standard, everything described in this document also applies to all subsequent minor versions.
+For further information on compatibility, see section https://fmi-standard.org/docs/3.0/#VersioningLayered[Versioning and Layered Standards] in the FMI 3.0 specification.
 
 Copyright (C) 2012-2025 The Modelica Association Project FMI.
 
 This document is licensed under the Attribution-ShareAlike 4.0 International license.
 The code is released under the 2-Clause BSD License.
-The licenses text can be found in the https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt[LICENSE.txt] file that accompanies this distribution.
-
-{empty}
+The licenses text can be found in the link:LICENSE.txt[LICENSE.txt] file that accompanies this distribution.
 
 == Introduction
 
@@ -44,10 +42,11 @@ In key parts of this document, non-normative examples are used to help understan
 
 Conventions used in this document:
 
-* Non-normative text is given in square brackets in italic font: _[Especially examples are defined in this style.]_
+* Non-normative text is given like this:
++
+NOTE: Especially examples are defined in this style.
 
 * The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in https://tools.ietf.org/html/rfc2119[RFC 2119] (regardless of formatting and capitalization).
-
 
 == Common Concepts
 
@@ -67,42 +66,36 @@ All information about the related files included with the FMU are contained in t
 
 .Manifest Attributes.
 [[table-schema-fmi-ls-ref-root-attributes]]
-[cols="1,1,1,2",options="header"]
+[cols="1,1,1,2"]
 |====
-|Attribute
-|Namespace
-|Value
-|Description
+|Attribute |Namespace |Value |Description
 
 |`fmi-ls-name`
-| `\http://fmi-standard.org/fmi-ls-manifest`
-| `org.fmi-standard.fmi-ls-ref`
-| Name of the layered standard in reverse domain name notation.
+|`\http://fmi-standard.org/fmi-ls-manifest`
+|`org.fmi-standard.fmi-ls-ref`
+|Name of the layered standard in reverse domain name notation.
 
 |`fmi-ls-version`
-| `\http://fmi-standard.org/fmi-ls-manifest`
-| `1.0.0-rc.1`
-| Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
+|`\http://fmi-standard.org/fmi-ls-manifest`
+|`1.0.0-rc.1`
+|Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
 
 |`fmi-ls-description`
-| `\http://fmi-standard.org/fmi-ls-manifest`
-| `Layered Standard providing related files for an FMU.`
-| String with a brief description of the layered standard that is suitable for display to users.
-
+|`\http://fmi-standard.org/fmi-ls-manifest`
+|`Layered Standard providing related files for an FMU.`
+|String with a brief description of the layered standard that is suitable for display to users.
 |====
 
 Beside these attributes the root element `fmiReferences` contains the following elements:
 
 .`fmiReferences` element details.
 [[table-schema-fmi-ls-ref-root-elements]]
-[cols="1,3",options="header"]
+[cols="1,3"]
 |====
-|Element
-|Description
+|Element |Description
 
 |`<Related>`
 |Each element describes one additional related file present in the FMU archive.
-
 |====
 
 An example of a manifest file for this layered standard is shown below:
@@ -112,7 +105,6 @@ An example of a manifest file for this layered standard is shown below:
 include::examples/fmi_ls_ref_manifest_example.xml[]
 ----
 
-
 === Related Files
 
 Any related files that are not part of the basic FMU, but are helpful in understanding and correctly using the FMU, are described by a `<Related>` element in the layered standard manifest file.
@@ -121,22 +113,21 @@ The `<Related>` element contains the following attributes:
 
 .Related Attributes.
 [[table-schema-fmi-ls-ref-related-attributes]]
-[cols="1,2",options="header"]
+[cols="1,2"]
 |====
-|Attribute
-|Description
+|Attribute |Description
 
 |`type`
-| MIME type of the related file.
+|MIME type of the related file.
 
 |`source`
-| Source of the related file as a URI.
+|Source of the related file as a URI.
 
 |`role`
-| Role of the related file, e.g., `model`, `requirement`, `specification`, `parameter`, `experiment`, etc.
+|Role of the related file, e.g., `model`, `requirement`, `specification`, `parameter`, `experiment`, etc.
 
 |`description`
-| Brief description of the related file that is suitable for display to users.
+|Brief description of the related file that is suitable for display to users.
 |====
 
 The `role` attribute is used to indicate the purpose of the related file.
@@ -146,40 +137,56 @@ Its value must be one of the following:
 [[table-schema-fmi-ls-ref-related-roles]]
 [cols="1,2",options="header"]
 |====
-|Role
-|Description
+|Role |Description
+
 |`document`
 | Document file, e.g., a documentation file, or any other document related to the FMU that does not fit into the other categories.
+
 |`requirement`
 | Requirement file, e.g., a requirements specification document.
+
 |`specification`
 | Specification file, e.g., a design specification document that describes the FMU design.
+
 |`model`
 | Model source file, e.g., a Modelica model, that was used to create the FMU.
+
 |`parameter`
 | Parameter file, e.g., a parameter set in SSV format. See below for rules of application.
+
 |`system`
 | System file, e.g., a system description file that describes the system in which the FMU is used.
+
 |`testcase`
 | Test case file, e.g., a set of test cases that are used as part of the overall simulation task.
+
 |`experiment`
 | Experiment file, e.g., an experiment setup in the EXP format described in <<fmi-ls-ref-experiments>>, that can be used to perform basic validation (i.e. a smoke test) of the FMU in a simulation environment.
+
 |`result`
 | Result file, e.g., a result file that contains the results of an experiment or simulation run.
+
 |`method`
 | Method file, e.g., a method description file that describes the method used to create the FMU.
+
 |`rationale`
 | Rationale file, e.g., a rationale document that explains the design decisions made during the development of the FMU.
+
 |`report`
 | Report file, e.g., a validation, verification or result report.
+
 |`request`
 | Request file, e.g., a simulation request that lead to the simulation task and hence to the creation of the FMU.
+
 |`delivery`
 | Delivery file, e.g., a simulation delivery document that describes the delivery of the FMU or overall simulation task.
+
 |`executable`
 | Executable file, e.g., a binary executable file.
+
 |`configuration`
 | Configuration file, e.g., a configuration file that describes the configuration of a simulation environment or other related software system.
+
 |`other`
 | Other related file, e.g., a file not covered by the other roles.
 |====
@@ -247,33 +254,26 @@ An experiments file is a valid XML file that contains a root element `<Experimen
 
 .Experiments Attributes.
 [[table-schema-fmi-ls-ref-experiments-root-attributes]]
-[cols="1,1,1,2",options="header"]
+[cols="1,1,1,2"]
 |====
-|Attribute
-|Namespace
-|Value
-|Description
+|Attribute |Namespace |Value |Description
 
 |`name`
 | Name of the set of experiments.
-
 |`description`
 | Brief description of the set of experiments that is suitable for display to users, e.g. indicating the purpose of the set of experiments.
-
 |====
 
 Beside these attributes the root element `<Experiments>` contains the following elements:
 
 .`<Experiments>` element details.
 [[table-schema-fmi-ls-ref-experiments-root-elements]]
-[cols="1,3",options="header"]
+[cols="1,3"]
 |====
-|Element
-|Description
+|Element |Description
 
 |`<Experiment>`
 |Each element describes one experiment setup.
-
 |====
 
 An example of an experiments file for this layered standard is shown below:
@@ -289,10 +289,9 @@ The `<Experiment>` element contains the following attributes:
 
 .Experiment Attributes.
 [[table-schema-fmi-ls-ref-experiment-attributes]]
-[cols="1,2",options="header"]
+[cols="1,2"]
 |====
-|Attribute
-|Description
+|Attribute |Description
 
 |`name`
 | Name of the experiment.
@@ -317,10 +316,9 @@ The `<Experiment>` element contains the following elements:
 
 .`<Experiment>` element details.
 [[table-schema-fmi-ls-ref-experiment-elements]]
-[cols="1,3",options="header"]
+[cols="1,3"]
 |====
-|Element
-|Description
+|Element |Description
 
 |`<Parameters>`
 |Parameters for the experiment setup.
