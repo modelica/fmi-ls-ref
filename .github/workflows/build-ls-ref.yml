@@ -8,6 +8,7 @@ on:
     branches: [ main ]
 
 jobs:
+  build-ls-ref:
 
     runs-on: ubuntu-24.04
 
