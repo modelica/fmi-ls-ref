@@ -1,0 +1,373 @@
+= Layered Standard References
+:sectnums:
+:sectnumlevels: 5
+:toc: left
+:toc-title: Contents
+:toclevels: 5
+:idprefix:
+:idseparator: -
+:xrefstyle: short
+:docinfo: shared
+:docinfodir: theme/docinfo
+:stem: latexmath
+:source-highlighter: highlightjs
+:highlightjs-theme: github
+:nofooter:
+:icons: font
+:website-url: https://fmi-standard.org/
+:repo-url: https://github.com/modelica/fmi-ls-ref
+:logo: FMI
+
+Based on FMI 2.0 and FMI 3.0, this layered standard defines how to provide additional related files inside an FMU with role information.
+
+NOTE: Note: Although the document refers to versions 2.0 and 3.0 of the FMI standard, everything described in this document also applies to all subsequent minor versions.
+For further information on compatibility, see section https://fmi-standard.org/docs/3.0/#VersioningLayered[Versioning and Layered Standards] in the FMI 3.0 specification.
+
+Copyright (C) 2012-2025 The Modelica Association Project FMI.
+
+This document is licensed under the Attribution-ShareAlike 4.0 International license.
+The code is released under the 2-Clause BSD License.
+The licenses text can be found in the link:LICENSE.txt[LICENSE.txt] file that accompanies this distribution.
+
+== Introduction
+
+=== Intent of This Document
+
+This document specifies the layered standard FMI-LS-REF, which allows the inclusion of related files into an FMU.
+This includes parameter sets, additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.
+
+=== How to Read This Document
+
+In key parts of this document, non-normative examples are used to help understand the standard.
+
+Conventions used in this document:
+
+* Non-normative text is given like this:
++
+NOTE: Especially examples are defined in this style.
+
+* The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in https://tools.ietf.org/html/rfc2119[RFC 2119] (regardless of formatting and capitalization).
+
+== Introduction
+
+This layered standard provides the capability to clearly designate the roles of additional related files included in an FMU in a structured way.
+These files are described in the layered standard manifest file, which is part of the FMU archive.
+In this way, an FMU can be shipped together with related files that are helpful in understanding and correctly using the FMU in a recognizable way.
+
+Note that this layered standard does not mandate the inclusion of any related files with an FMU.
+It only provides a structured way to describe such files, if they are included.
+The included related files can be of arbitrary types, as long as their roles are described in the layered standard manifest file.
+This layered standard can be used in addition to other layered standards, and allows the central description of related files included with the FMU, independently of their use in other layered standards.
+Thus an implementation can treat the related files described in this layered standard in a uniform way, regardless of whether they are used in other layered standards or not, and regardless of whether the other layered standards are supported by the implementation or not.
+
+This supports the following use cases, among others:
+
+* Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.
+* The ability to provide multiple parameter sets with an FMU as part of the FMU archive.
+* Inclusion of additional experiments that provide sufficient information to enable smoke test validation of an FMU in a new simulation environment.
+
+=== Layered Standard Manifest File
+
+All information about the related files included with the FMU are contained in the layered standard manifest file.
+<<table-schema-fmi-ls-ref-root-attributes>> shows the attributes of the `fmiReferences` root element of `fmi-ls-manifest.xml`.
+
+.Manifest Attributes.
+[[table-schema-fmi-ls-ref-root-attributes]]
+[cols="1,1,1,2"]
+|====
+|Attribute |Namespace |Value |Description
+
+|`fmi-ls-name`
+|`\http://fmi-standard.org/fmi-ls-manifest`
+|`org.fmi-standard.fmi-ls-ref`
+|Name of the layered standard in reverse domain name notation.
+
+|`fmi-ls-version`
+|`\http://fmi-standard.org/fmi-ls-manifest`
+|`1.0.0-alpha.1`
+|Version of the layered standard. This layered standard uses semantic versioning, as defined in <<PW13>>.
+
+|`fmi-ls-description`
+|`\http://fmi-standard.org/fmi-ls-manifest`
+|`Layered Standard providing information on related files included in an FMU.`
+|String with a brief description of the layered standard that is suitable for display to users.
+|====
+
+Beside these attributes the root element `fmiReferences` contains the following elements:
+
+.`fmiReferences` element details.
+[[table-schema-fmi-ls-ref-root-elements]]
+[cols="1,3"]
+|====
+|Element |Description
+
+|`<Related>`
+|Each element describes one additional related file present in the FMU archive.
+|====
+
+An example of a manifest file for this layered standard is shown below:
+
+[source, xml]
+----
+include::examples/fmi_ls_ref_manifest_example.xml[]
+----
+
+=== Related Files
+
+Any related files that are not part of the basic FMU, but are helpful in understanding and correctly using the FMU, are described by a `<Related>` element in the layered standard manifest file.
+Each related file is described by one `<Related>` element in the layered standard manifest file.
+It is up to the FMU creator or last modifier to decide which related files to include in the FMU, and which of these files to describe in the layered standard manifest file.
+Files can be included in the FMU due to other layered standards, or simply as additional files in the FMU archive.
+In both cases the related files can be described in the layered standard manifest file.
+
+Due to the fact that such files might be manipulated in later stages by tools not aware of this layered standard, an importer should be prepared to handle related files that are described in the layered standard manifest file, but are not present in the FMU archive, as well as related files that are present in the FMU archive, but are not described in the layered standard manifest file.
+
+The `<Related>` element contains the following attributes:
+
+.Related Attributes.
+[[table-schema-fmi-ls-ref-related-attributes]]
+[cols="1,2"]
+|====
+|Attribute |Description
+
+|`type`
+|MIME type of the related file.
+
+|`source`
+|Source of the related file as a URI.
+Any relative URIs are to be interpreted relative to the location of the layered standard manifest file in the FMU archive, i.e., the base URI for resolution is the URI of the layered standard manifest file.
+This allows the referencing of related files included in other places of the FMU archive, besides the `extra/org.fmi-standard.fmi-ls-ref` directory described below.
+If absolute URIs are used, it is left to the importer to decide how to handle these URIs, e.g., whether to try to download the file from the given URI, or to ignore the related file, or handle it in some other way.
+Similarly the set of allowed URI schemes is dependent on the importer.
+No base requirements on supported URI schemes are given in this layered standard, apart from the fact that relative URIs pointing to files inside the FMU archive are always supported.
+
+|`role`
+|Role of the related file, e.g., `model`, `requirement`, `specification`, `parameter`, `experiment`, etc.
+
+|`description`
+|Brief description of the related file that is suitable for display to users.
+|====
+
+The `role` attribute is used to indicate the purpose of the related file.
+A role can consist of a main role and optionally one or more sub-roles, separated by a forward slash (`/`), that indicate more specific purposes of the related file.
+For example, the role `experiment/smoke-test` indicates that the related file is an experiment file that can be used to perform a smoke test validation of the FMU, while the role `experiment/validation` indicates that the related file is an experiment file that can be used to perform a detailed validation of the FMU.
+Similarly, the role `serialized-state/x86_64-windows` would indicate that the related file is a serialized state file for the FMI 3.0 64-bit x86 Windows platform.
+Whether sub-roles are defined for a main role is dependent on the main role and is described in the respective role definition below.
+
+Valid role values are defined in the following table:
+
+.Role Values.
+[[table-schema-fmi-ls-ref-related-roles]]
+[cols="1,2",options="header"]
+|====
+|Role |Description
+
+|`document`
+| Document file, e.g., a documentation file, or any other document related to the FMU that does not fit into the other categories.
+
+|`requirement`
+| Requirement file, e.g., a requirements specification document.
+
+|`specification`
+| Specification file, e.g., a design specification document that describes the FMU design.
+
+|`model`
+| Model source file, e.g., a Modelica model, that was used to create the FMU.
+
+|`parameter`
+| Parameter file, e.g., a parameter set in SSV format. See below for rules of application.
+
+|`system`
+| System file, e.g., a system description file - for example in SSD format - that describes the system in which the FMU is used.
+
+|`testcase`
+| Test case file, e.g., a set of test cases that are used as part of the overall simulation task.
+
+|`experiment`
+| Experiment file, e.g., an experiment setup in the EXP format described in <<fmi-ls-ref-experiments>>, that can be used to perform basic validation (i.e. a smoke test) of the FMU in a simulation environment.
+The role can be further specified using sub-roles, e.g., `experiment/smoke-test`, `experiment/validation`, or `experiment/uncertainty-analysis`, referring to the purpose of the experiment file.
+If no sub-role is given, the experiment file is assumed to be usable for basic validation (i.e. a smoke test).
+Only the following sub-roles are defined: `smoke-test`, `validation`, and `uncertainty-analysis`.
+
+|`result`
+| Result file, e.g., a result file that contains the results of an experiment or simulation run.
+
+|`method`
+| Method file, e.g., a method description file that describes the method used to create the FMU.
+
+|`rationale`
+| Rationale file, e.g., a rationale document that explains the design decisions made during the development of the FMU.
+
+|`report`
+| Report file, e.g., a validation, verification or result report.
+
+|`request`
+| Request file, e.g., a simulation request that lead to the simulation task and hence to the creation of the FMU.
+
+|`delivery`
+| Delivery file, e.g., a simulation delivery document that describes the delivery of the FMU or overall simulation task.
+
+|`configuration`
+| Configuration file, e.g., a configuration file that describes the configuration of a simulation environment or other related software system.
+
+|`signature`
+| Signature file, e.g., a digital signature file that can be used to verify the authenticity of the FMU, related files, or any part thereof. Note that this layered standard does not mandate any specific signature format or method, nor what exactly is signed.
+
+|`serialized-state`
+| Serialized state file, e.g., a file that contains a serialized state of the FMU, suitable for restoring the FMU to this state using the FMI functions for state serialization and deserialization and state setting.
+When the serialized state file is not platform independent, then the platform should be indicated in a sub-role (e.g., `serialized-state/x86_64-windows` for FMI 3.0 64-bit x86 Windows platform).
+The identifier to use for the sub-role is the same as used in the respective FMI standard for platform identification.
+
+|`other`
+| Other related file, e.g., a file not covered by the other roles.
+|====
+
+=== Structure of the FMU Archive
+
+Any related files, including parameter or experiment files, to be included in the FMU, that are not already included due to other layered standards are to be placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
+It is left to implementations on whether sub-directories in this directory are used, or whether all files are placed in the directory itself.
+Note that files related to other layered standards are to be placed in the respective directories for these layered standards, as specified in the respective layered standard documents.
+They can be referenced using relative URIs in the `source` attribute of the `<Related>` element, via paths relative to the `extra/org.fmi-standard.fmi-ls-ref` directory.
+For example `modelica/MyModel.mo` would refer to the file `/extra/org.fmi-standard.fmi-ls-ref/modelica/MyModel.mo` in the FMU archive, and `../org.fmi-standard.fmi-ssp/model.ssd` would refer to the file `/extra/org.fmi-standard.fmi-ssp/model.ssd` in the FMU archive, assuming a layered standard named `org.fmi-standard.fmi-ssp` is also used in the FMU.
+Similarly, `../../documentation/additional_info.txt` would refer to the file `/documentation/additional_info.txt` in the FMU archive.
+
+[#figure-fmi-lsref-directory-structure]
+----
+documentation
+   fmi-ls-ref.{txt|html}              // Optional additional documentation
+
+extra/org.fmi-standard.fmi-ls-ref     // Contains files related to this layered standard
+   fmi-ls-manifest.xml                // The layered standard manifest file
+   <arbtrary filename>.ssv            // Example of an SSV parameter file
+   <arbtrary filename>.exp            // Example of a EXP experiment file
+   modelica/<arbitrary filename>.mo   // Example of a modelica model source file
+   ...
+----
+
+=== Documentation
+
+When shipping an FMU with reference files, it is recommended to provide further information to the importer in the file `documentation/fmi-ls-ref.{txt|html}`.
+For example, this might concern additional information on what test cases are included, their intent, to be expected deviations, areas of interest, etc.
+
+It is recommended to incorporate a link to the `documentation/fmi-ls-ref.{txt|html}` file in the main documentation of the FMU.
+
+=== Specific processing rules
+
+This section details specific processing rules for certain related files, given their roles and/or MIME types.
+
+==== Role parameter
+
+If a related file with role `parameter` is given, the expectation is that the parameter set defined in the related file can be applied as-is to the FMU.
+
+For files with type `application/x-ssp-parameter-set`, i.e. SSV files, the parameter set is applied as if a parameter binding without any prefix or parameter mapping referencing this parameter set were present in a component referencing the FMU, according to the <<SSP20>> standard.
+This implies that the parameter values are applied to any variables of the FMU with identical names.
+
+==== Role experiment
+
+If a related file with main role `experiment` is given, the expectation is that the set of experiments defined in the file can be performed on the FMU just using the resources present in the FMU.
+
+If no sub-role is given, or if the sub-role `smoke-test` is given, the expectation is that the experiment(s) defined in the file can be used to perform a basic validation (i.e., smoke test) of the FMU in a simulation environment.
+If the sub-role `validation` is given, the expectation is that the experiment(s) defined in the file can be used to perform a detailed validation of the FMU in a simulation environment.
+If the sub-role `uncertainty-analysis` is given, the expectation is that the experiment(s) defined in the file can be used to perform an uncertainty analysis of the FMU in a simulation environment.
+
+For files with type `application/x-ma-ls-experiments`, i.e. EXP files, the experiment is performed as specified in <<fmi-ls-ref-experiments>>, using the format defined therein.
+
+[bibliography]
+== References
+
+- [[[PW13]]] Preston-Werner, T. (2013): **Semantic Versioning 2.0.0**.  https://semver.org/spec/v2.0.0.html
+- [[[SSP20]]] System Structure and Parameterization 2.0. https://ssp-standard.org/docs/2.0/
+- [[[RFC2119]]] RFC 2119. https://tools.ietf.org/html/rfc2119
+- [[[LICENSE]]] FMI License text. https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt
+
+[appendix#fmi-ls-ref-experiments]
+== Experiments Format
+
+NOTE: This appendix is non-normative, and is provided for informational purposes only.
+It is expected that this appendix will be moved to a separate document in the future.
+
+This appendix describes the format of experiment files that can be included in an FMU as part of the layered standard.
+The experiments file format is a simple XML-based format that allows the description of experiment setups, including parameters, stimuli, and references.
+
+Files using this format shall use the MIME type `application/x-ma-ls-experiments`, and a file type suffix of `.exp`.
+
+An experiments file is a valid XML file that contains a root element `<Experiments>` with the following attributes:
+
+.Experiments Attributes.
+[[table-schema-fmi-ls-ref-experiments-root-attributes]]
+[cols="1,1,1,2"]
+|====
+|Attribute |Namespace |Value |Description
+
+|`name`
+| Name of the set of experiments.
+|`description`
+| Brief description of the set of experiments that is suitable for display to users, e.g. indicating the purpose of the set of experiments.
+|====
+
+Beside these attributes the root element `<Experiments>` contains the following elements:
+
+.`<Experiments>` element details.
+[[table-schema-fmi-ls-ref-experiments-root-elements]]
+[cols="1,3"]
+|====
+|Element |Description
+
+|`<Experiment>`
+|Each element describes one experiment setup.
+|====
+
+An example of an experiments file for this layered standard is shown below:
+
+[source, xml]
+----
+include::examples/fmi_ls_ref_experiments_example.xml[]
+----
+
+Each experiment setup is described by an `<Experiment>` element in the layered standard manifest file.
+
+The `<Experiment>` element contains the following attributes:
+
+.Experiment Attributes.
+[[table-schema-fmi-ls-ref-experiment-attributes]]
+[cols="1,2"]
+|====
+|Attribute |Description
+
+|`name`
+| Name of the experiment.
+
+|`description`
+| Brief description of the experiment that is suitable for display to users.
+
+|`startTime`
+| Start time of the experiment setup.
+
+|`stopTime`
+| Stop time of the experiment setup.
+
+|`tolerance`
+| Tolerance for the experiment setup.
+
+|`stepSize`
+| Step size for the experiment setup.
+|====
+
+The `<Experiment>` element contains the following elements:
+
+.`<Experiment>` element details.
+[[table-schema-fmi-ls-ref-experiment-elements]]
+[cols="1,3"]
+|====
+|Element |Description
+
+|`<Parameters>`
+|Parameters for the experiment setup.
+
+|`<Stimuli>`
+|Reference stimuli for the experiment setup.
+
+|`<References>`
+|Reference results for the experiment setup.
+|====
+
