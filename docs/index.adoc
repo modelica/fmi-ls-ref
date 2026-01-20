@@ -283,6 +283,9 @@ For files with type `application/x-ma-ls-experiments`, i.e. EXP files, the exper
 [appendix#fmi-ls-ref-experiments]
 == Experiments Format
 
+NOTE: This appendix is non-normative, and is provided for informational purposes only.
+It is expected that this appendix will be moved to a separate document in the future.
+
 This appendix describes the format of experiment files that can be included in an FMU as part of the layered standard.
 The experiments file format is a simple XML-based format that allows the description of experiment setups, including parameters, stimuli, and references.
 
