@@ -156,6 +156,14 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
+        <xs:attribute name="matchBy" type="TStimuliMatchBy" default="systemConnectorName">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Default binding mode for reference signal columns. The current layered-standard
+                    implementation only supports systemConnectorName.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="TSignal">

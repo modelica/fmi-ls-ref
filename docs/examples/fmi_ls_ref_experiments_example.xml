@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Experiments
     name="Smoke Tests"
-    description="Simple set of smoke tests to validate the integration of the FMU into a simulation engine."
+    description="Simple set of smoke tests to validate the integration of the SSP into a simulation engine."
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardReferenceExperiments.xsd">
-    <Experiment name="Test1" description="Baseline steady-state test"
+    <Experiment name="Test1" description="Baseline steady-state test" target="SystemStructure.ssd"
         startTime="0.0" stopTime="10.0" stepSize="0.001" tolerance="0.004">
-        <Stimuli source="test1-in.csv"/>
-        <References source="test1-ref.csv"/>
+        <Parameters source="test1-params.ssv" mapping="test1-params.ssm"/>
+        <Stimuli source="test1-in.csv" matchBy="systemConnectorName" mapping="test1-in.ssm"/>
+        <References source="test1-ref.csv" matchBy="systemConnectorName" mapping="test1-ref.ssm">
+            <Signal name="y"/>
+            <Signal name="z"/>
+        </References>
     </Experiment>
-    <Experiment name="Test2" description="Baseline dynamic test" startTime="0.0" stopTime="15.0" stepSize="0.010">
-        <Parameters source="dynamic-params.ssv"/>
-        <Stimuli source="test2-in.csv"/>
-        <References source="test2-ref.hdf5" type="application/hdf5"/>
+    <Experiment name="Test2" description="Baseline dynamic test" target="SystemStructure.ssd" startTime="0.0" stopTime="15.0" stepSize="0.010">
+        <Parameters source="dynamic-params.ssv" mapping="dynamic-params.ssm"/>
+        <Stimuli source="test2-in.csv" type="text/csv" matchBy="systemConnectorName" mapping="test2-in.ssm"/>
+        <References source="test2-ref.hdf5" type="application/hdf5" matchBy="systemConnectorName" mapping="test2-ref.ssm">
+            <Signal name="u"/>
+            <Signal name="v"/>
+        </References>
     </Experiment>
 </Experiments>

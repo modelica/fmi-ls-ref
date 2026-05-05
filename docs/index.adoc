@@ -35,6 +35,7 @@ The licenses text can be found in the link:LICENSE.txt[LICENSE.txt] file that ac
 
 This document specifies the layered standard FMI-LS-REF, which allows the inclusion of related files into an FMU.
 This includes parameter sets, additional experiments, as well as other relevant files to the FMU, like the model sources, requirements, or specifications.
+The reference implementation in this repository also applies the experiment format to SSP archives, where the experiment file can identify a target `SystemStructure.ssd` and use SSP mapping files to bind parameters, stimuli, and reference results.
 
 === How to Read This Document
 
@@ -65,6 +66,7 @@ This supports the following use cases, among others:
 * Inclusion of requirements, specifications, model sources, and other related files that are helpful in understanding and correctly using the FMU in a recognizable way.
 * The ability to provide multiple parameter sets with an FMU as part of the FMU archive.
 * Inclusion of additional experiments that provide sufficient information to enable smoke test validation of an FMU in a new simulation environment.
+* Inclusion of SSP-oriented experiment bundles that target a system description, bind stimuli to connectors, and map reference signals to outputs.
 
 === Layered Standard Manifest File
 
@@ -239,6 +241,7 @@ documentation
 extra/org.fmi-standard.fmi-ls-ref     // Contains files related to this layered standard
    fmi-ls-manifest.xml                // The layered standard manifest file
    <arbtrary filename>.ssv            // Example of an SSV parameter file
+   <arbtrary filename>.ssm            // Example of an SSP parameter-mapping file
    <arbtrary filename>.exp            // Example of a EXP experiment file
    modelica/<arbitrary filename>.mo   // Example of a modelica model source file
    ...
@@ -271,6 +274,7 @@ If the sub-role `validation` is given, the expectation is that the experiment(s)
 If the sub-role `uncertainty-analysis` is given, the expectation is that the experiment(s) defined in the file can be used to perform an uncertainty analysis of the FMU in a simulation environment.
 
 For files with type `application/x-ma-ls-experiments`, i.e. EXP files, the experiment is performed as specified in <<fmi-ls-ref-experiments>>, using the format defined therein.
+For SSP archives, the same experiment structure may additionally carry a `target` attribute that identifies the archive-relative SSD to execute, plus optional SSP mapping files for parameters, stimuli, and references.
 
 [bibliography]
 == References
@@ -288,6 +292,7 @@ It is expected that this appendix will be moved to a separate document in the fu
 
 This appendix describes the format of experiment files that can be included in an FMU as part of the layered standard.
 The experiments file format is a simple XML-based format that allows the description of experiment setups, including parameters, stimuli, and references.
+The reference implementation in this repository extends the same XML shape for SSP archives by adding an optional `target` attribute and explicit mapping fields for parameters, stimuli, and reference signals.
 
 Files using this format shall use the MIME type `application/x-ma-ls-experiments`, and a file type suffix of `.exp`.
 
@@ -324,7 +329,7 @@ An example of an experiments file for this layered standard is shown below:
 include::examples/fmi_ls_ref_experiments_example.xml[]
 ----
 
-Each experiment setup is described by an `<Experiment>` element in the layered standard manifest file.
+Each experiment setup is described by an `<Experiment>` element in the experiments file.
 
 The `<Experiment>` element contains the following attributes:
 
@@ -339,6 +344,9 @@ The `<Experiment>` element contains the following attributes:
 
 |`description`
 | Brief description of the experiment that is suitable for display to users.
+
+|`target`
+| Archive-relative target system description for the experiment, e.g. `SystemStructure.ssd`.
 
 |`startTime`
 | Start time of the experiment setup.
@@ -369,5 +377,73 @@ The `<Experiment>` element contains the following elements:
 
 |`<References>`
 |Reference results for the experiment setup.
+
+|`<Signal>`
+|Name of a reference signal to include in comparison.
 |====
 
+The following tables describe the attributes of each experiment element in more detail.
+
+.`<Parameters>` Attributes
+[[table-schema-fmi-ls-ref-parameters-attributes]]
+[cols="1,2"]
+|====
+|Attribute |Description
+
+|`source`
+| Source of the parameter data. The URI is resolved relative to the experiments file.
+
+|`type`
+| MIME type of the parameter data source. Defaults to `application/x-ssp-parameter-set`.
+
+|`mapping`
+| Optional SSP `SSM` file used to map parameter names onto the target system.
+|====
+
+.`<Stimuli>` Attributes
+[[table-schema-fmi-ls-ref-stimuli-attributes]]
+[cols="1,2"]
+|====
+|Attribute |Description
+
+|`source`
+| Source of the stimuli data. The URI is resolved relative to the experiments file.
+
+|`type`
+| MIME type of the stimuli data source. Defaults to `text/csv`.
+
+|`matchBy`
+| Binding mode for stimuli columns. Defaults to `systemConnectorName`.
+
+|`mapping`
+| Optional SSP `SSM` file used for explicit stimulus binding.
+|====
+
+.`<References>` Attributes
+[[table-schema-fmi-ls-ref-references-attributes]]
+[cols="1,2"]
+|====
+|Attribute |Description
+
+|`source`
+| Source of the reference results. The URI is resolved relative to the experiments file.
+
+|`type`
+| MIME type of the reference result data source. Defaults to `text/csv`.
+
+|`matchBy`
+| Binding mode for reference signal columns. Defaults to `systemConnectorName`.
+
+|`mapping`
+| Optional SSP `SSM` file used to map reference signal names to outputs.
+|====
+
+.`<Signal>` Attributes
+[[table-schema-fmi-ls-ref-signal-attributes]]
+[cols="1,2"]
+|====
+|Attribute |Description
+
+|`name`
+| Name of a reference signal to include in comparison.
+|====
