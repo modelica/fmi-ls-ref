@@ -52,9 +52,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     <xs:complexType name="TExperiment">
         <xs:sequence>
-            <xs:element name="Parameters" minOccurs="0" type="TParameters"/>
-            <xs:element name="Stimuli" minOccurs="0" type="TStimuli"/>
-            <xs:element name="References" minOccurs="0" type="TReferences"/>
+            <xs:element name="Parameters" minOccurs="0" maxOccurs="unbounded" type="TParameters"/>
+            <xs:element name="Stimuli" minOccurs="0" maxOccurs="unbounded" type="TStimuli"/>
+            <xs:element name="References" minOccurs="0" maxOccurs="unbounded" type="TReferences"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="description" type="xs:string"/>
