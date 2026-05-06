@@ -148,6 +148,41 @@ No base requirements on supported URI schemes are given in this layered standard
 |Brief description of the related file that is suitable for display to users.
 |====
 
+The `<Related>` element can contain the following child elements:
+
+.Related Child Elements.
+[[table-schema-fmi-ls-ref-related-elements]]
+[cols="1,3"]
+|====
+|Element |Description
+
+|`<Label>`
+|Each element assigns a label to the related file, which can be used to categorize or filter related files for a certain use case.
+Zero or more `<Label>` elements may be present.
+|====
+
+==== Labels
+
+Labels can be used to categorize related files and to filter them for a certain use case.
+For example, labels can be used to filter for a certain variant, to filter files which are relevant for SIL or HIL simulation, or to filter for different target operating systems.
+
+The `<Label>` element contains the following attributes:
+
+.Label Attributes.
+[[table-schema-fmi-ls-ref-label-attributes]]
+[cols="1,1,2"]
+|====
+|Attribute |Presence |Description
+
+|`name`
+|Required
+|Name of the label.
+
+|`description`
+|Optional
+|Brief description of the label that is suitable for display to users.
+|====
+
 The `role` attribute is used to indicate the purpose of the related file.
 A role can consist of a main role and optionally one or more sub-roles, separated by a forward slash (`/`), that indicate more specific purposes of the related file.
 For example, the role `experiment/smoke-test` indicates that the related file is an experiment file that can be used to perform a smoke test validation of the FMU, while the role `experiment/validation` indicates that the related file is an experiment file that can be used to perform a detailed validation of the FMU.
