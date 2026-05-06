@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified">
+    <xs:import schemaLocation="https://raw.githubusercontent.com/modelica/fmi-standard/main/schema/fmi3Annotation.xsd"/>
     <xs:annotation>
         <xs:documentation>
 Copyright(c) 2023-2025 Modelica Association Project "FMI".
@@ -42,6 +43,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                             <xs:element name="Parameters" minOccurs="0" type="TParameters"/>
                             <xs:element name="Stimuli" minOccurs="0" type="TTimeSeriesData"/>
                             <xs:element name="References" minOccurs="0" type="TTimeSeriesData"/>
+                            <xs:element ref="Annotations" minOccurs="0"/>
                         </xs:sequence>
                         <xs:attribute name="name" type="xs:string" use="required"/>
                         <xs:attribute name="description" type="xs:string"/>
@@ -51,6 +53,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         <xs:attribute name="stepSize" type="xs:double"/>
                     </xs:complexType>
                 </xs:element>
+                <xs:element ref="Annotations" minOccurs="0"/>
             </xs:sequence>
             <xs:attribute name="name" type="xs:string" use="required"/>
             <xs:attribute name="description" type="xs:string"/>
@@ -58,6 +61,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xs:element>
         
     <xs:complexType name="TParameters">
+        <xs:sequence>
+            <xs:element ref="Annotations" minOccurs="0"/>
+        </xs:sequence>
         <xs:attribute name="type" type="xs:string" use="optional" default="application/x-ssp-parameter-set">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
@@ -80,6 +86,9 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xs:complexType>
 
     <xs:complexType name="TTimeSeriesData">
+        <xs:sequence>
+            <xs:element ref="Annotations" minOccurs="0"/>
+        </xs:sequence>
         <xs:attribute name="type" type="xs:string" use="optional" default="text/csv">
             <xs:annotation>
                 <xs:documentation xml:lang="en">

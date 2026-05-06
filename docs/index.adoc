@@ -103,6 +103,9 @@ Beside these attributes the root element `fmiReferences` contains the following 
 
 |`<Related>`
 |Each element describes one additional related file present in the FMU archive.
+
+|`<Annotations>`
+|Optional annotations as defined in the FMI standard.
 |====
 
 An example of a manifest file for this layered standard is shown below:
@@ -146,6 +149,18 @@ No base requirements on supported URI schemes are given in this layered standard
 
 |`description`
 |Brief description of the related file that is suitable for display to users.
+|====
+
+The `<Related>` element contains the following elements:
+
+.`<Related>` element details.
+[[table-schema-fmi-ls-ref-related-elements]]
+[cols="1,3"]
+|====
+|Element |Description
+
+|`<Annotations>`
+|Optional annotations as defined in the FMI standard.
 |====
 
 The `role` attribute is used to indicate the purpose of the related file.
@@ -315,6 +330,9 @@ Beside these attributes the root element `<Experiments>` contains the following 
 
 |`<Experiment>`
 |Each element describes one experiment setup.
+
+|`<Annotations>`
+|Optional annotations as defined in the FMI standard.
 |====
 
 An example of an experiments file for this layered standard is shown below:
@@ -369,5 +387,8 @@ The `<Experiment>` element contains the following elements:
 
 |`<References>`
 |Reference results for the experiment setup.
+
+|`<Annotations>`
+|Optional annotations as defined in the FMI standard.
 |====
 
