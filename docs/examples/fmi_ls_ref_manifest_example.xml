@@ -13,5 +13,5 @@
 	<Related type="application/x-ssp-parameter-set" source="highend-params.ssv" role="parameter" description="Highend Model Parameters"/>
 	<Related type="application/x-ssp-parameter-set" source="dynamic-params.ssv" role="parameter" description="Dynamic Model Parameters"/>
 	<Related type="application/x-ma-ls-experiments" source="smoke-tests.exp" role="experiment" description="Smoke Tests of FMU"/>
-	<Related type="application/x-ssp-simulation-resource-meta-data" source="metadata/model.srmd" role="meta-data" description="SRMD Meta-Data"/>
+	<Related type="application/x-srmd-meta-data" source="metadata/model.srmd" role="meta-data" description="SRMD Meta-Data"/>
 </fmiReferences>
