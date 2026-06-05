@@ -33,69 +33,144 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ----------------------------------------------------------------------------
         </xs:documentation>
     </xs:annotation>
+
+    <xs:simpleType name="TStimuliMatchBy">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="systemConnectorName"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:element name="Experiments">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="Experiment" minOccurs="1" maxOccurs="unbounded">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="Parameters" minOccurs="0" type="TParameters"/>
-                            <xs:element name="Stimuli" minOccurs="0" type="TTimeSeriesData"/>
-                            <xs:element name="References" minOccurs="0" type="TTimeSeriesData"/>
-                        </xs:sequence>
-                        <xs:attribute name="name" type="xs:string" use="required"/>
-                        <xs:attribute name="description" type="xs:string"/>
-                        <xs:attribute name="startTime" type="xs:double"/>
-                        <xs:attribute name="stopTime" type="xs:double"/>
-                        <xs:attribute name="tolerance" type="xs:double"/>
-                        <xs:attribute name="stepSize" type="xs:double"/>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="Experiment" minOccurs="1" maxOccurs="unbounded" type="TExperiment"/>
             </xs:sequence>
             <xs:attribute name="name" type="xs:string" use="required"/>
             <xs:attribute name="description" type="xs:string"/>
         </xs:complexType>
     </xs:element>
-        
+
+    <xs:complexType name="TExperiment">
+        <xs:sequence>
+            <xs:element name="Parameters" minOccurs="0" maxOccurs="unbounded" type="TParameters"/>
+            <xs:element name="Stimuli" minOccurs="0" maxOccurs="unbounded" type="TStimuli"/>
+            <xs:element name="References" minOccurs="0" maxOccurs="unbounded" type="TReferences"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string"/>
+        <xs:attribute name="target" type="xs:anyURI"/>
+        <xs:attribute name="startTime" type="xs:double"/>
+        <xs:attribute name="stopTime" type="xs:double"/>
+        <xs:attribute name="tolerance" type="xs:double"/>
+        <xs:attribute name="stepSize" type="xs:double"/>
+    </xs:complexType>
+
     <xs:complexType name="TParameters">
         <xs:attribute name="type" type="xs:string" use="optional" default="application/x-ssp-parameter-set">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
                     This attribute specifies the MIME type of the parameter data source, which
                     defaults to application/x-ssp-parameter-set to indicate the SSV file format
-                    as specified in the SSP standard. No further types are currently defined, 
-                    but can of course be added at a later date.
+                    as specified in the SSP standard.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="source" type="xs:anyURI" use="required">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
-                    This attribute indicates the source of the parameter source as a URI
-                    (cf. RFC 3986).  For purposes of the resolution of relative URIs
-                    the base URI is the URI of the fmiReference file.
+                    URI of the parameter data source. For SSP archives, this is resolved
+                    relative to the layered standard reference file.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="mapping" type="xs:anyURI">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Optional SSP parameter-mapping file (SSM) used to map source names to
+                    experiment target parameter names.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
 
-    <xs:complexType name="TTimeSeriesData">
+    <xs:complexType name="TStimuli">
         <xs:attribute name="type" type="xs:string" use="optional" default="text/csv">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
-                    This attribute specifies the MIME type of the time series data source, which
-                    defaults to text/csv to indicate the CSV file format as specified in XXX.
-                    No further types are currently defined, but can of course be added at a later
-                    date, e.g. for pre-existing time series file formats, like HDF5, MDF, etc.
+                    This attribute specifies the MIME type of the stimuli data source, which
+                    defaults to text/csv.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="source" type="xs:anyURI" use="required">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
-                    This attribute indicates the source of the time series data as a URI
-                    (cf. RFC 3986).  For purposes of the resolution of relative URIs
-                    the base URI is the URI of the current file.
+                    URI of the stimuli data source. For SSP archives, this is resolved relative
+                    to the layered standard reference file.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="matchBy" type="TStimuliMatchBy" default="systemConnectorName">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Default binding mode for stimuli columns. The current layered-standard
+                    implementation only supports systemConnectorName.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="mapping" type="xs:anyURI">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Optional SSP parameter-mapping file (SSM) used to map stimuli names to
+                    system connector names.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="TReferences">
+        <xs:sequence>
+            <xs:element name="Signal" minOccurs="0" maxOccurs="unbounded" type="TSignal"/>
+        </xs:sequence>
+        <xs:attribute name="type" type="xs:string" use="optional" default="text/csv">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    This attribute specifies the MIME type of the reference data source, which
+                    defaults to text/csv.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="source" type="xs:anyURI" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    URI of the reference result data source. For SSP archives, this is resolved
+                    relative to the layered standard reference file.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="mapping" type="xs:anyURI">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Optional SSP parameter-mapping file (SSM) used to map reference signal names
+                    to SSP output connector names.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="matchBy" type="TStimuliMatchBy" default="systemConnectorName">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Default binding mode for reference signal columns. The current layered-standard
+                    implementation only supports systemConnectorName.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="TSignal">
+        <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Name of the reference signal to include in comparison.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
