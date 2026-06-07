@@ -478,7 +478,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>Layered Standard References</h1>
 <div class="details">
-<span id="revnumber">version bda35f0,</span>
+<span id="revnumber">version 4a1401d,</span>
 <span id="revdate">2026-06-07</span>
 </div>
 <div id="toc" class="toc2">
@@ -493,7 +493,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#introduction-2">2. Introduction</a>
 <ul class="sectlevel2">
 <li><a href="#layered-standard-manifest-file">2.1. Layered Standard Manifest File</a></li>
-<li><a href="#related-files">2.2. Related Files</a></li>
+<li><a href="#related-files">2.2. Related Files</a>
+<ul class="sectlevel3">
+<li><a href="#labels">2.2.1. Labels</a></li>
+</ul>
+</li>
 <li><a href="#structure-of-the-fmu-archive">2.3. Structure of the FMU Archive</a></li>
 <li><a href="#documentation">2.4. Documentation</a></li>
 <li><a href="#specific-processing-rules">2.5. Specific processing rules</a>
@@ -692,11 +696,21 @@ Thus an implementation can treat the related files described in this layered sta
 	fmi-ls:fmi-ls-description="Layered Standard providing information on related files included in an FMU."&gt;
 	
 	&lt;Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source"/&gt;
-	&lt;Related type="application/x-ssp-parameter-set" source="baseline-params.ssv" role="parameter" description="Baseline Model Parameters"/&gt;
-	&lt;Related type="application/x-ssp-parameter-set" source="midend-params.ssv" role="parameter" description="Midend Model Parameters"/&gt;
-	&lt;Related type="application/x-ssp-parameter-set" source="highend-params.ssv" role="parameter" description="Highend Model Parameters"/&gt;
+	&lt;Related type="application/x-ssp-parameter-set" source="baseline-params.ssv" role="parameter" description="Baseline Model Parameters"&gt;
+		&lt;Label name="variant:baseline" description="Baseline variant parameters"/&gt;
+	&lt;/Related&gt;
+	&lt;Related type="application/x-ssp-parameter-set" source="midend-params.ssv" role="parameter" description="Midend Model Parameters"&gt;
+	&lt;Related type="application/x-ssp-parameter-set" source="midrange-params.ssv" role="parameter" description="Midend Model Parameters"&gt;
+		&lt;Label name="variant:midrange" description="Mid-range variant parameters"/&gt;
+	&lt;/Related&gt;
+	&lt;Related type="application/x-ssp-parameter-set" source="highend-params.ssv" role="parameter" description="High-end Model Parameters"&gt;
+		&lt;Label name="variant:highend" description="High-end variant parameters"/&gt;
+	&lt;/Related&gt;
 	&lt;Related type="application/x-ssp-parameter-set" source="dynamic-params.ssv" role="parameter" description="Dynamic Model Parameters"/&gt;
-	&lt;Related type="application/x-ma-ls-experiments" source="smoke-tests.exp" role="experiment" description="Smoke Tests of FMU"/&gt;
+	&lt;Related type="application/x-ma-ls-experiments" source="smoke-tests.exp" role="experiment" description="Smoke Tests of FMU"&gt;
+		&lt;Label name="simulation-type:SIL" description="Applicable for Software-in-the-Loop simulation"/&gt;
+		&lt;Label name="os:Win64" description="Applicable for Windows 64-bit target"/&gt;
+	&lt;/Related&gt;
 &lt;/fmiReferences&gt;</code></pre>
 </div>
 </div>
@@ -753,6 +767,65 @@ No base requirements on supported URI schemes are given in this layered standard
 </tbody>
 </table>
 <div class="paragraph">
+<p>The <code>&lt;Related&gt;</code> element can contain the following child elements:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-related-elements" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Related Child Elements.</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Label&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each element assigns a label to the related file, which can be used to categorize or filter related files for a certain use case.
+Zero or more <code>&lt;Label&gt;</code> elements may be present.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="labels">2.2.1. Labels</h4>
+<div class="paragraph">
+<p>Labels can be used to categorize related files and to filter them for a certain use case.
+For example, labels can be used to filter for a certain variant, to filter files which are relevant for SIL or HIL simulation, or to filter for different target operating systems.</p>
+</div>
+<div class="paragraph">
+<p>The <code>&lt;Label&gt;</code> element contains the following attributes:</p>
+</div>
+<table id="table-schema-fmi-ls-ref-label-attributes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Label Attributes.</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute</th>
+<th class="tableblock halign-left valign-top">Presence</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Required</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the label.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Brief description of the label that is suitable for display to users.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
 <p>The <code>role</code> attribute is used to indicate the purpose of the related file.
 A role can consist of a main role and optionally one or more sub-roles, separated by a forward slash (<code>/</code>), that indicate more specific purposes of the related file.
 For example, the role <code>experiment/smoke-test</code> indicates that the related file is an experiment file that can be used to perform a smoke test validation of the FMU, while the role <code>experiment/validation</code> indicates that the related file is an experiment file that can be used to perform a detailed validation of the FMU.
@@ -763,7 +836,7 @@ Whether sub-roles are defined for a main role is dependent on the main role and 
 <p>Valid role values are defined in the following table:</p>
 </div>
 <table id="table-schema-fmi-ls-ref-related-roles" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Role Values.</caption>
+<caption class="title">Table 6. Role Values.</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
@@ -854,6 +927,7 @@ The identifier to use for the sub-role is the same as used in the respective FMI
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="structure-of-the-fmu-archive">2.3. Structure of the FMU Archive</h3>
@@ -981,7 +1055,7 @@ The experiments file format is a simple XML-based format that allows the descrip
 <p>An experiments file is a valid XML file that contains a root element <code>&lt;Experiments&gt;</code> with the following attributes:</p>
 </div>
 <table id="table-schema-fmi-ls-ref-experiments-root-attributes" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Experiments Attributes.</caption>
+<caption class="title">Table 7. Experiments Attributes.</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -1009,7 +1083,7 @@ The experiments file format is a simple XML-based format that allows the descrip
 <p>Beside these attributes the root element <code>&lt;Experiments&gt;</code> contains the following elements:</p>
 </div>
 <table id="table-schema-fmi-ls-ref-experiments-root-elements" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. <code>&lt;Experiments&gt;</code> element details.</caption>
+<caption class="title">Table 8. <code>&lt;Experiments&gt;</code> element details.</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -1058,7 +1132,7 @@ The experiments file format is a simple XML-based format that allows the descrip
 <p>The <code>&lt;Experiment&gt;</code> element contains the following attributes:</p>
 </div>
 <table id="table-schema-fmi-ls-ref-experiment-attributes" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Experiment Attributes.</caption>
+<caption class="title">Table 9. Experiment Attributes.</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
@@ -1100,7 +1174,7 @@ The experiments file format is a simple XML-based format that allows the descrip
 <p>The <code>&lt;Experiment&gt;</code> element contains the following elements:</p>
 </div>
 <table id="table-schema-fmi-ls-ref-experiment-elements" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. <code>&lt;Experiment&gt;</code> element details.</caption>
+<caption class="title">Table 10. <code>&lt;Experiment&gt;</code> element details.</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
