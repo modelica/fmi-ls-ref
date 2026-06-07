@@ -262,6 +262,8 @@ If a related file with role `parameter` is given, the expectation is that the pa
 For files with type `application/x-ssp-parameter-set`, i.e. SSV files, the parameter set is applied as if a parameter binding without any prefix or parameter mapping referencing this parameter set were present in a component referencing the FMU, according to the <<SSP20>> standard.
 This implies that the parameter values are applied to any variables of the FMU with identical names.
 
+NOTE: In addition to the `description` attribute of the `<Related>` element, implementations can, in the case of SSV files, also use the `name` and `description` attributes defined in the SSV file to display more information on the parameter set to the user.
+
 ==== Role experiment
 
 If a related file with main role `experiment` is given, the expectation is that the set of experiments defined in the file can be performed on the FMU just using the resources present in the FMU.
