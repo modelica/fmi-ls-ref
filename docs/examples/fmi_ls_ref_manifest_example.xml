@@ -8,9 +8,19 @@
 	fmi-ls:fmi-ls-description="Layered Standard providing information on related files included in an FMU.">
 	
 	<Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source"/>
-	<Related type="application/x-ssp-parameter-set" source="baseline-params.ssv" role="parameter" description="Baseline Model Parameters"/>
-	<Related type="application/x-ssp-parameter-set" source="midend-params.ssv" role="parameter" description="Midend Model Parameters"/>
-	<Related type="application/x-ssp-parameter-set" source="highend-params.ssv" role="parameter" description="Highend Model Parameters"/>
+	<Related type="application/x-ssp-parameter-set" source="baseline-params.ssv" role="parameter" description="Baseline Model Parameters">
+		<Label name="variant:baseline" description="Baseline variant parameters"/>
+	</Related>
+	<Related type="application/x-ssp-parameter-set" source="midend-params.ssv" role="parameter" description="Midend Model Parameters">
+	<Related type="application/x-ssp-parameter-set" source="midrange-params.ssv" role="parameter" description="Midend Model Parameters">
+		<Label name="variant:midrange" description="Mid-range variant parameters"/>
+	</Related>
+	<Related type="application/x-ssp-parameter-set" source="highend-params.ssv" role="parameter" description="High-end Model Parameters">
+		<Label name="variant:highend" description="High-end variant parameters"/>
+	</Related>
 	<Related type="application/x-ssp-parameter-set" source="dynamic-params.ssv" role="parameter" description="Dynamic Model Parameters"/>
-	<Related type="application/x-ma-ls-experiments" source="smoke-tests.exp" role="experiment" description="Smoke Tests of FMU"/>
+	<Related type="application/x-ma-ls-experiments" source="smoke-tests.exp" role="experiment" description="Smoke Tests of FMU">
+		<Label name="simulation-type:SIL" description="Applicable for Software-in-the-Loop simulation"/>
+		<Label name="os:Win64" description="Applicable for Windows 64-bit target"/>
+	</Related>
 </fmiReferences>
