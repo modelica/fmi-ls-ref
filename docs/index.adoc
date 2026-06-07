@@ -221,6 +221,9 @@ Only the following sub-roles are defined: `smoke-test`, `validation`, and `uncer
 When the serialized state file is not platform independent, then the platform should be indicated in a sub-role (e.g., `serialized-state/x86_64-windows` for FMI 3.0 64-bit x86 Windows platform).
 The identifier to use for the sub-role is the same as used in the respective FMI standard for platform identification.
 
+|`meta-data`
+| Meta-data file, e.g., an SRMD file or other meta-data file that provides meta-data about the FMU or its context.
+
 |`other`
 | Other related file, e.g., a file not covered by the other roles.
 |====

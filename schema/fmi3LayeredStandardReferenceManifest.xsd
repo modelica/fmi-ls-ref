@@ -77,7 +77,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:pattern value="(document|requirement|specification|model|parameter|system|testcase|experiment(/(smoke-test|validation|uncertainty-analysis))?|result|method|rationale|report|request|delivery|configuration|signature|serialized-state(/.*)?|other)"/>
+                    <xs:pattern value="(document|requirement|specification|model|parameter|system|testcase|experiment(/(smoke-test|validation|uncertainty-analysis))?|result|method|rationale|report|request|delivery|configuration|signature|serialized-state(/.*)?|meta-data|other)"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
