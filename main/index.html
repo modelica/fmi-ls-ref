@@ -478,8 +478,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>Layered Standard References</h1>
 <div class="details">
-<span id="revnumber">version 781fe3b,</span>
-<span id="revdate">2026-06-03</span>
+<span id="revnumber">version bda35f0,</span>
+<span id="revdate">2026-06-07</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -902,6 +902,18 @@ For example, this might concern additional information on what test cases are in
 <div class="paragraph">
 <p>For files with type <code>application/x-ssp-parameter-set</code>, i.e. SSV files, the parameter set is applied as if a parameter binding without any prefix or parameter mapping referencing this parameter set were present in a component referencing the FMU, according to the <a href="#SSP20">[SSP20]</a> standard.
 This implies that the parameter values are applied to any variables of the FMU with identical names.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In addition to the <code>description</code> attribute of the <code>&lt;Related&gt;</code> element, implementations can, in the case of SSV files, also use the <code>name</code> and <code>description</code> attributes defined in the SSV file to display more information on the parameter set to the user.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect3">
