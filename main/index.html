@@ -478,7 +478,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>Layered Standard References</h1>
 <div class="details">
-<span id="revnumber">version ab3a47f,</span>
+<span id="revnumber">version f3b017b,</span>
 <span id="revdate">2026-06-07</span>
 </div>
 <div id="toc" class="toc2">
@@ -720,6 +720,7 @@ Thus an implementation can treat the related files described in this layered sta
 		&lt;Label name="simulation-type:SIL" description="Applicable for Software-in-the-Loop simulation"/&gt;
 		&lt;Label name="os:Win64" description="Applicable for Windows 64-bit target"/&gt;
 	&lt;/Related&gt;
+	&lt;Related type="application/x-srmd-meta-data" source="metadata/model.srmd" role="meta-data" description="SRMD Meta-Data"/&gt;
 &lt;/fmiReferences&gt;</code></pre>
 </div>
 </div>
@@ -870,6 +871,10 @@ Only the following sub-roles are defined: <code>smoke-test</code>, <code>validat
 <td class="tableblock halign-left valign-top"><p class="tableblock">Serialized state file, e.g., a file that contains a serialized state of the FMU, suitable for restoring the FMU to this state using the FMI functions for state serialization and deserialization and state setting.
 When the serialized state file is not platform independent, then the platform should be indicated in a sub-role (e.g., <code>serialized-state/x86_64-windows</code> for FMI 3.0 64-bit x86 Windows platform).
 The identifier to use for the sub-role is the same as used in the respective FMI standard for platform identification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>meta-data</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Meta-data file, e.g., an SRMD file or other meta-data file that provides meta-data about the FMU or its context.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>other</code></p></td>

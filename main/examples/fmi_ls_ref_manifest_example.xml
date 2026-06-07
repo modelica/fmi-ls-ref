@@ -28,4 +28,5 @@
 		<Label name="simulation-type:SIL" description="Applicable for Software-in-the-Loop simulation"/>
 		<Label name="os:Win64" description="Applicable for Windows 64-bit target"/>
 	</Related>
+	<Related type="application/x-srmd-meta-data" source="metadata/model.srmd" role="meta-data" description="SRMD Meta-Data"/>
 </fmiReferences>
