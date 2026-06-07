@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest" elementFormDefault="qualified" attributeFormDefault="qualified">
     <xs:import namespace="http://fmi-standard.org/fmi-ls-manifest" schemaLocation="https://raw.githubusercontent.com/modelica/fmi-standard/main/schema/fmi3LayeredStandardManifest.xsd"/>
+    <xs:import schemaLocation="https://raw.githubusercontent.com/modelica/fmi-standard/main/schema/fmi3Annotation.xsd"/>
     <xs:annotation>
         <xs:documentation>
 Copyright(c) 2023-2025 Modelica Association Project "FMI".
@@ -38,6 +39,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Related" minOccurs="0" maxOccurs="unbounded" type="TRelated"/>
+                <xs:element ref="Annotations" minOccurs="0"/>
             </xs:sequence>
             <xs:attribute ref="fmi-ls:fmi-ls-name" use="required" fixed="org.fmi-standard.fmi-ls-ref"/>
             <xs:attribute ref="fmi-ls:fmi-ls-version" use="required"/>
@@ -46,6 +48,10 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     </xs:element>
     
     <xs:complexType name="TRelated">
+        <xs:sequence>
+            <xs:element name="Label" minOccurs="0" maxOccurs="unbounded" type="TLabel"/>
+            <xs:element ref="Annotations" minOccurs="0"/>
+        </xs:sequence>
         <xs:attribute name="type" type="xs:string" use="optional" default="application/octet-stream">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
@@ -76,5 +82,22 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </xs:simpleType>
         </xs:attribute>
         <xs:attribute name="description" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="TLabel">
+        <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    This attribute specifies the name of the label used to categorize or filter the related resource.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="description" type="xs:string">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    This optional attribute provides a brief description of the label.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 </xs:schema>
