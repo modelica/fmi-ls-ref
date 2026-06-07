@@ -151,18 +151,6 @@ No base requirements on supported URI schemes are given in this layered standard
 |Brief description of the related file that is suitable for display to users.
 |====
 
-The `<Related>` element contains the following elements:
-
-.`<Related>` element details.
-[[table-schema-fmi-ls-ref-related-elements]]
-[cols="1,3"]
-|====
-|Element |Description
-
-|`<Annotations>`
-|Optional annotations as defined in the FMI standard.
-|====
-
 The `role` attribute is used to indicate the purpose of the related file.
 A role can consist of a main role and optionally one or more sub-roles, separated by a forward slash (`/`), that indicate more specific purposes of the related file.
 For example, the role `experiment/smoke-test` indicates that the related file is an experiment file that can be used to perform a smoke test validation of the FMU, while the role `experiment/validation` indicates that the related file is an experiment file that can be used to perform a detailed validation of the FMU.
@@ -237,6 +225,45 @@ The identifier to use for the sub-role is the same as used in the respective FMI
 | Other related file, e.g., a file not covered by the other roles.
 |====
 
+The `<Related>` element can contain the following child elements:
+
+.Related Child Elements.
+[[table-schema-fmi-ls-ref-related-elements]]
+[cols="1,3"]
+|====
+|Element |Description
+
+|`<Label>`
+|Each element assigns a label to the related file, which can be used to categorize or filter related files for a certain use case.
+Zero or more `<Label>` elements may be present.
+
+|`<Annotations>`
+|Optional annotations as defined in the FMI standard.
+|====
+
+==== Labels
+
+Labels can be used to categorize related files and to filter them for a certain use case.
+For example, labels can be used to filter for a certain variant, to filter files which are relevant for SIL or HIL simulation, or to filter for different target operating systems.
+
+The `<Label>` element contains the following attributes:
+
+.Label Attributes.
+[[table-schema-fmi-ls-ref-label-attributes]]
+[cols="1,1,2"]
+|====
+|Attribute |Presence |Description
+
+|`name`
+|Required
+|Name of the label.
+
+|`description`
+|Optional
+|Brief description of the label that is suitable for display to users.
+|====
+
+
 === Structure of the FMU Archive
 
 Any related files, including parameter or experiment files, to be included in the FMU, that are not already included due to other layered standards are to be placed in the following `extra` directory: `/extra/org.fmi-standard.fmi-ls-ref`.
@@ -276,6 +303,8 @@ If a related file with role `parameter` is given, the expectation is that the pa
 
 For files with type `application/x-ssp-parameter-set`, i.e. SSV files, the parameter set is applied as if a parameter binding without any prefix or parameter mapping referencing this parameter set were present in a component referencing the FMU, according to the <<SSP20>> standard.
 This implies that the parameter values are applied to any variables of the FMU with identical names.
+
+NOTE: In addition to the `description` attribute of the `<Related>` element, implementations can, in the case of SSV files, also use the `name` and `description` attributes defined in the SSV file to display more information on the parameter set to the user.
 
 ==== Role experiment
 

@@ -49,6 +49,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     
     <xs:complexType name="TRelated">
         <xs:sequence>
+            <xs:element name="Label" minOccurs="0" maxOccurs="unbounded" type="TLabel"/>
             <xs:element ref="Annotations" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="type" type="xs:string" use="optional" default="application/octet-stream">
@@ -81,5 +82,22 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </xs:simpleType>
         </xs:attribute>
         <xs:attribute name="description" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="TLabel">
+        <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    This attribute specifies the name of the label used to categorize or filter the related resource.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="description" type="xs:string">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    This optional attribute provides a brief description of the label.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 </xs:schema>
