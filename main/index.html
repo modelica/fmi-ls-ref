@@ -478,8 +478,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>Layered Standard References</h1>
 <div class="details">
-<span id="revnumber">version a88b22f,</span>
-<span id="revdate">2026-06-17</span>
+<span id="revnumber">version 70ee1b8,</span>
+<span id="revdate">2026-07-01</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Contents</div>
@@ -509,7 +509,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#references">References</a></li>
-<li><a href="#fmi-ls-ref-experiments">Appendix A: Experiments Format</a></li>
 </ul>
 </div>
 </div>
@@ -829,7 +828,7 @@ Whether sub-roles are defined for a main role is dependent on the main role and 
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>experiment</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Experiment file, e.g., an experiment setup in the EXP format described in <a href="#fmi-ls-ref-experiments">Appendix A</a>, that can be used to perform basic validation (i.e. a smoke test) of the FMU in a simulation environment.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Experiment file, e.g., an experiment setup in the format described in <a href="https://github.com/modelica/ma-hs-experiments">MA-HS-Experiments</a>, that can be used to perform basic validation (i.e. a smoke test) of the FMU in a simulation environment.
 The role can be further specified using sub-roles, e.g., <code>experiment/smoke-test</code>, <code>experiment/validation</code>, or <code>experiment/uncertainty-analysis</code>, referring to the purpose of the experiment file.
 If no sub-role is given, the experiment file is assumed to be usable for basic validation (i.e. a smoke test).
 Only the following sub-roles are defined: <code>smoke-test</code>, <code>validation</code>, and <code>uncertainty-analysis</code>.</p></td>
@@ -1019,7 +1018,7 @@ If the sub-role <code>validation</code> is given, the expectation is that the ex
 If the sub-role <code>uncertainty-analysis</code> is given, the expectation is that the experiment(s) defined in the file can be used to perform an uncertainty analysis of the FMU in a simulation environment.</p>
 </div>
 <div class="paragraph">
-<p>For files with type <code>application/x-ma-ls-experiments</code>, i.e. EXP files, the experiment is performed as specified in <a href="#fmi-ls-ref-experiments">Appendix A</a>, using the format defined therein.</p>
+<p>For files with type <code>application/x-ma-hs-experiments</code>, the experiment is performed as specified in <a href="https://github.com/modelica/ma-hs-experiments">MA-HS-Experiments</a>, using the format defined therein.</p>
 </div>
 </div>
 </div>
@@ -1042,190 +1041,11 @@ If the sub-role <code>uncertainty-analysis</code> is given, the expectation is t
 <li>
 <p><a id="LICENSE"></a>[LICENSE] FMI License text. <a href="https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt" class="bare">https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt</a></p>
 </li>
+<li>
+<p><a id="MA-HS-Experiments"></a>[MA-HS-Experiments] Modelica Association Harmonized Specification: Experiments Format. <a href="https://github.com/modelica/ma-hs-experiments" class="bare">https://github.com/modelica/ma-hs-experiments</a></p>
+</li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="fmi-ls-ref-experiments">Appendix A: Experiments Format</h2>
-<div class="sectionbody">
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This appendix is non-normative, and is provided for informational purposes only.
-It is expected that this appendix will be moved to a separate document in the future.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>This appendix describes the format of experiment files that can be included in an FMU as part of the layered standard.
-The experiments file format is a simple XML-based format that allows the description of experiment setups, including parameters, stimuli, and references.</p>
-</div>
-<div class="paragraph">
-<p>Files using this format shall use the MIME type <code>application/x-ma-ls-experiments</code>, and a file type suffix of <code>.exp</code>.</p>
-</div>
-<div class="paragraph">
-<p>An experiments file is a valid XML file that contains a root element <code>&lt;Experiments&gt;</code> with the following attributes:</p>
-</div>
-<table id="table-schema-fmi-ls-ref-experiments-root-attributes" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Experiments Attributes.</caption>
-<colgroup>
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 20%;">
-<col style="width: 40%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Attribute</th>
-<th class="tableblock halign-left valign-top">Namespace</th>
-<th class="tableblock halign-left valign-top">Value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the set of experiments.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Brief description of the set of experiments that is suitable for display to users, e.g. indicating the purpose of the set of experiments.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>Beside these attributes the root element <code>&lt;Experiments&gt;</code> contains the following elements:</p>
-</div>
-<table id="table-schema-fmi-ls-ref-experiments-root-elements" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. <code>&lt;Experiments&gt;</code> element details.</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Element</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Experiment&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Each element describes one experiment setup.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Annotations&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional annotations as defined in the FMI standard.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>An example of an experiments file for this layered standard is shown below:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;Experiments
-    name="Smoke Tests"
-    description="Simple set of smoke tests to validate the integration of the FMU into a simulation engine."
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="../../schema/fmi3LayeredStandardReferenceExperiments.xsd"&gt;
-    &lt;Experiment name="Test1" description="Baseline steady-state test"
-        startTime="0.0" stopTime="10.0" stepSize="0.001" tolerance="0.004"&gt;
-        &lt;Stimuli source="test1-in.csv"/&gt;
-        &lt;References source="test1-ref.csv"/&gt;
-    &lt;/Experiment&gt;
-    &lt;Experiment name="Test2" description="Baseline dynamic test" startTime="0.0" stopTime="15.0" stepSize="0.010"&gt;
-        &lt;Parameters source="dynamic-params.ssv"/&gt;
-        &lt;Stimuli source="test2-in.csv"/&gt;
-        &lt;References source="test2-ref.hdf5" type="application/hdf5"/&gt;
-    &lt;/Experiment&gt;
-&lt;/Experiments&gt;</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Each experiment setup is described by an <code>&lt;Experiment&gt;</code> element in the layered standard manifest file.</p>
-</div>
-<div class="paragraph">
-<p>The <code>&lt;Experiment&gt;</code> element contains the following attributes:</p>
-</div>
-<table id="table-schema-fmi-ls-ref-experiment-attributes" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Experiment Attributes.</caption>
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Attribute</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Name of the experiment.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>description</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Brief description of the experiment that is suitable for display to users.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Start time of the experiment setup.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stopTime</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Stop time of the experiment setup.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tolerance</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tolerance for the experiment setup.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stepSize</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Step size for the experiment setup.</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The <code>&lt;Experiment&gt;</code> element contains the following elements:</p>
-</div>
-<table id="table-schema-fmi-ls-ref-experiment-elements" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. <code>&lt;Experiment&gt;</code> element details.</caption>
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 75%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Element</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Parameters&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters for the experiment setup.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Stimuli&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Reference stimuli for the experiment setup.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;References&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Reference results for the experiment setup.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>&lt;Annotations&gt;</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional annotations as defined in the FMI standard.</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>

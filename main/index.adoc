@@ -187,7 +187,7 @@ Valid role values are defined in the following table:
 | Test case file, e.g., a set of test cases that are used as part of the overall simulation task.
 
 |`experiment`
-| Experiment file, e.g., an experiment setup in the EXP format described in <<fmi-ls-ref-experiments>>, that can be used to perform basic validation (i.e. a smoke test) of the FMU in a simulation environment.
+| Experiment file, e.g., an experiment setup in the format described in https://github.com/modelica/ma-hs-experiments[MA-HS-Experiments], that can be used to perform basic validation (i.e. a smoke test) of the FMU in a simulation environment.
 The role can be further specified using sub-roles, e.g., `experiment/smoke-test`, `experiment/validation`, or `experiment/uncertainty-analysis`, referring to the purpose of the experiment file.
 If no sub-role is given, the experiment file is assumed to be usable for basic validation (i.e. a smoke test).
 Only the following sub-roles are defined: `smoke-test`, `validation`, and `uncertainty-analysis`.
@@ -317,7 +317,7 @@ If no sub-role is given, or if the sub-role `smoke-test` is given, the expectati
 If the sub-role `validation` is given, the expectation is that the experiment(s) defined in the file can be used to perform a detailed validation of the FMU in a simulation environment.
 If the sub-role `uncertainty-analysis` is given, the expectation is that the experiment(s) defined in the file can be used to perform an uncertainty analysis of the FMU in a simulation environment.
 
-For files with type `application/x-ma-ls-experiments`, i.e. EXP files, the experiment is performed as specified in <<fmi-ls-ref-experiments>>, using the format defined therein.
+For files with type `application/x-ma-hs-experiments`, the experiment is performed as specified in https://github.com/modelica/ma-hs-experiments[MA-HS-Experiments], using the format defined therein.
 
 [bibliography]
 == References
@@ -326,101 +326,5 @@ For files with type `application/x-ma-ls-experiments`, i.e. EXP files, the exper
 - [[[SSP20]]] System Structure and Parameterization 2.0. https://ssp-standard.org/docs/2.0/
 - [[[RFC2119]]] RFC 2119. https://tools.ietf.org/html/rfc2119
 - [[[LICENSE]]] FMI License text. https://raw.githubusercontent.com/modelica/fmi-standard/master/LICENSE.txt
-
-[appendix#fmi-ls-ref-experiments]
-== Experiments Format
-
-NOTE: This appendix is non-normative, and is provided for informational purposes only.
-It is expected that this appendix will be moved to a separate document in the future.
-
-This appendix describes the format of experiment files that can be included in an FMU as part of the layered standard.
-The experiments file format is a simple XML-based format that allows the description of experiment setups, including parameters, stimuli, and references.
-
-Files using this format shall use the MIME type `application/x-ma-ls-experiments`, and a file type suffix of `.exp`.
-
-An experiments file is a valid XML file that contains a root element `<Experiments>` with the following attributes:
-
-.Experiments Attributes.
-[[table-schema-fmi-ls-ref-experiments-root-attributes]]
-[cols="1,1,1,2"]
-|====
-|Attribute |Namespace |Value |Description
-
-|`name`
-| Name of the set of experiments.
-|`description`
-| Brief description of the set of experiments that is suitable for display to users, e.g. indicating the purpose of the set of experiments.
-|====
-
-Beside these attributes the root element `<Experiments>` contains the following elements:
-
-.`<Experiments>` element details.
-[[table-schema-fmi-ls-ref-experiments-root-elements]]
-[cols="1,3"]
-|====
-|Element |Description
-
-|`<Experiment>`
-|Each element describes one experiment setup.
-
-|`<Annotations>`
-|Optional annotations as defined in the FMI standard.
-|====
-
-An example of an experiments file for this layered standard is shown below:
-
-[source, xml]
-----
-include::examples/fmi_ls_ref_experiments_example.xml[]
-----
-
-Each experiment setup is described by an `<Experiment>` element in the layered standard manifest file.
-
-The `<Experiment>` element contains the following attributes:
-
-.Experiment Attributes.
-[[table-schema-fmi-ls-ref-experiment-attributes]]
-[cols="1,2"]
-|====
-|Attribute |Description
-
-|`name`
-| Name of the experiment.
-
-|`description`
-| Brief description of the experiment that is suitable for display to users.
-
-|`startTime`
-| Start time of the experiment setup.
-
-|`stopTime`
-| Stop time of the experiment setup.
-
-|`tolerance`
-| Tolerance for the experiment setup.
-
-|`stepSize`
-| Step size for the experiment setup.
-|====
-
-The `<Experiment>` element contains the following elements:
-
-.`<Experiment>` element details.
-[[table-schema-fmi-ls-ref-experiment-elements]]
-[cols="1,3"]
-|====
-|Element |Description
-
-|`<Parameters>`
-|Parameters for the experiment setup.
-
-|`<Stimuli>`
-|Reference stimuli for the experiment setup.
-
-|`<References>`
-|Reference results for the experiment setup.
-
-|`<Annotations>`
-|Optional annotations as defined in the FMI standard.
-|====
+- [[[MA-HS-Experiments]]] Modelica Association Harmonized Specification: Experiments Format. https://github.com/modelica/ma-hs-experiments
 
