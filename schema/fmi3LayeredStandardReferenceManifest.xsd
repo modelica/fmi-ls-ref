@@ -44,6 +44,16 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <xs:attribute ref="fmi-ls:fmi-ls-name" use="required" fixed="org.fmi-standard.fmi-ls-ref"/>
             <xs:attribute ref="fmi-ls:fmi-ls-version" use="required"/>
             <xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered Standard providing information on related files included in an FMU."/>
+            <xs:attribute name="checksumRequired" type="xs:boolean" use="optional" default="false">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        If set to true, every Related element in this manifest is expected to
+                        provide the checksum attribute, e.g. to fulfill fixity requirements for
+                        long term archiving. This attribute is not enforced by the schema; a
+                        consuming application that requires this guarantee shall validate it.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
     
@@ -82,6 +92,38 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             </xs:simpleType>
         </xs:attribute>
         <xs:attribute name="description" type="xs:string"/>
+        <xs:attribute name="checksum" use="optional">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    This optional attribute provides a hex-encoded digest of the resource
+                    referenced by source, computed with the algorithm named by
+                    checksumAlgorithm. It allows a consumer to verify that the referenced
+                    resource has not been modified since the manifest was produced, e.g. to
+                    fulfill fixity requirements for long term archiving.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[0-9a-fA-F]+"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="checksumAlgorithm" use="optional" default="SHA-256">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    This attribute specifies the algorithm used to compute the checksum
+                    attribute. Defaults to SHA-256 if checksum is present and this attribute
+                    is omitted. Ignored if checksum is absent.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="SHA-256"/>
+                    <xs:enumeration value="SHA-384"/>
+                    <xs:enumeration value="SHA-512"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="TLabel">

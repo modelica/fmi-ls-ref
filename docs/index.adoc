@@ -91,6 +91,12 @@ All information about the related files included with the FMU are contained in t
 |`\http://fmi-standard.org/fmi-ls-manifest`
 |`Layered Standard providing information on related files included in an FMU.`
 |String with a brief description of the layered standard that is suitable for display to users.
+
+|`checksumRequired`
+|
+|`true` or `false`
+|Optional boolean attribute, defaulting to `false`, that indicates whether every `<Related>` element in this manifest is expected to provide the `checksum` attribute, e.g. to fulfill fixity requirements for long term archiving.
+This attribute is informative; it is not enforced by the schema, so a consuming application that requires this guarantee has to validate it itself.
 |====
 
 Beside these attributes the root element `fmiReferences` contains the following elements:
@@ -149,6 +155,14 @@ No base requirements on supported URI schemes are given in this layered standard
 
 |`description`
 |Brief description of the related file that is suitable for display to users.
+
+|`checksum`
+|Optional hex-encoded digest of the related file, computed with the algorithm named by `checksumAlgorithm`.
+Allows an importer to verify that the related file has not been modified since the manifest was produced, e.g. to fulfill fixity requirements for long term archiving.
+If the enclosing `fmiReferences` element has `checksumRequired="true"`, every `<Related>` element is expected to provide this attribute.
+
+|`checksumAlgorithm`
+|Algorithm used to compute the `checksum` attribute. One of `SHA-256`, `SHA-384`, or `SHA-512`, defaulting to `SHA-256`. Ignored if `checksum` is absent.
 |====
 
 The `role` attribute is used to indicate the purpose of the related file.
