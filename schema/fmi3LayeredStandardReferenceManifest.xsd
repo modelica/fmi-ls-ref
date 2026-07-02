@@ -44,6 +44,20 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <xs:attribute ref="fmi-ls:fmi-ls-name" use="required" fixed="org.fmi-standard.fmi-ls-ref"/>
             <xs:attribute ref="fmi-ls:fmi-ls-version" use="required"/>
             <xs:attribute ref="fmi-ls:fmi-ls-description" use="required" fixed="Layered Standard providing information on related files included in an FMU."/>
+            <xs:attribute name="absoluteSourceForbidden" type="xs:boolean" use="optional" default="false">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        If set to true, every Related element in this manifest is expected to
+                        use a source URI without a scheme component (i.e. not an absolute URI
+                        per RFC 3986, such as http://... or file:///...), e.g. to ensure the
+                        manifest remains resolvable over long time horizons for archiving
+                        purposes. Root-relative (/foo/bar) and scheme-relative (//host/path)
+                        forms are not considered absolute for purposes of this attribute. This
+                        attribute is not enforced by the schema; a consuming application that
+                        requires this guarantee shall validate it.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
     

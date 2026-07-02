@@ -91,6 +91,12 @@ All information about the related files included with the FMU are contained in t
 |`\http://fmi-standard.org/fmi-ls-manifest`
 |`Layered Standard providing information on related files included in an FMU.`
 |String with a brief description of the layered standard that is suitable for display to users.
+
+|`absoluteSourceForbidden`
+|
+|`true` or `false`
+|Optional boolean attribute, defaulting to `false`, that indicates whether every `<Related>` element in this manifest is expected to use a `source` URI without a scheme component (i.e. not an absolute URI), e.g. to ensure the manifest remains resolvable over long time horizons for archiving purposes.
+This attribute is informative; it is not enforced by the schema, so a consuming application that requires this guarantee has to validate it itself.
 |====
 
 Beside these attributes the root element `fmiReferences` contains the following elements:
@@ -143,6 +149,7 @@ This allows the referencing of related files included in other places of the FMU
 If absolute URIs are used, it is left to the importer to decide how to handle these URIs, e.g., whether to try to download the file from the given URI, or to ignore the related file, or handle it in some other way.
 Similarly the set of allowed URI schemes is dependent on the importer.
 No base requirements on supported URI schemes are given in this layered standard, apart from the fact that relative URIs pointing to files inside the FMU archive are always supported.
+A manifest producer that wants to guarantee no absolute URIs are used, e.g. for long term archiving purposes, can indicate this using the `absoluteSourceForbidden` attribute of the `fmiReferences` root element.
 
 |`role`
 |Role of the related file, e.g., `model`, `requirement`, `specification`, `parameter`, `experiment`, etc.
