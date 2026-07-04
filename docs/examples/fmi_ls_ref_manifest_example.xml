@@ -5,10 +5,9 @@
 	xmlns:fmi-ls="http://fmi-standard.org/fmi-ls-manifest"
 	fmi-ls:fmi-ls-name="org.fmi-standard.fmi-ls-ref"
 	fmi-ls:fmi-ls-version="1.0.0-alpha.1"
-	fmi-ls:fmi-ls-description="Layered Standard providing information on related files included in an FMU."
-	checksumRequired="true">
+	fmi-ls:fmi-ls-description="Layered Standard providing information on related files included in an FMU.">
 
-	<Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source" checksum="ffe01792c99375508cbe2d1f4c6223f870abef903b0057ec0a445cf081d45b1a" checksumAlgorithm="SHA-256">
+	<Related type="text/modelica" source="modelica/mymodel.mo" role="model" description="Modelica Model Source" checksum="ffe01792c99375508cbe2d1f4c6223f870abef903b0057ec0a445cf081d45b1a" checksumAlgorithm="SHA3-256">
 		<Annotations>
 			<Annotation type="com.example.tool">
 				<tool:metadata xmlns:tool="com.example.tool" reviewedBy="alice"/>
@@ -18,16 +17,16 @@
 	<Related type="application/x-ssp-parameter-set" source="baseline-params.ssv" role="parameter" description="Baseline Model Parameters" checksum="6e82821588af4d4d75e8d57ddbca3cca23c79c2b08aec62eb806d438a1107344" checksumAlgorithm="SHA-256">
 		<Label name="variant:baseline" description="Baseline variant parameters"/>
 	</Related>
-	<Related type="application/x-ssp-parameter-set" source="midrange-params.ssv" role="parameter" description="Mid-range Model Parameters" checksum="8955e528070dce74adf46c8146e032e38f98b635454d68775a776aa5ac8f633b" checksumAlgorithm="SHA-256">
+	<Related type="application/x-ssp-parameter-set" source="midrange-params.ssv" role="parameter" description="Mid-range Model Parameters" checksum="8955e528070dce74adf46c8146e032e38f98b635454d68775a776aa5ac8f633b">
 		<Label name="variant:midrange" description="Mid-range variant parameters"/>
 	</Related>
 	<Related type="application/x-ssp-parameter-set" source="highend-params.ssv" role="parameter" description="High-end Model Parameters" checksum="8a22f182b57ccaeec1e5a505954e2e4927fcc996fc19ef762bafe9161e07f88a" checksumAlgorithm="SHA-256">
 		<Label name="variant:highend" description="High-end variant parameters"/>
 	</Related>
 	<Related type="application/x-ssp-parameter-set" source="dynamic-params.ssv" role="parameter" description="Dynamic Model Parameters" checksum="64c8ff700dee2f23de85dcdd584ee3a74b3e8fa0b5c4275f1049119794e68aa8" checksumAlgorithm="SHA-256"/>
-	<Related type="application/x-ma-ls-experiments" source="smoke-tests.exp" role="experiment" description="Smoke Tests of FMU" checksum="11268b2b3121ce05f8162e69d9625794f8909fc9c79c3320c0692be0547ce6e7" checksumAlgorithm="SHA-256">
+	<Related type="application/x-ma-ls-experiments" source="smoke-tests.exp" role="experiment" description="Smoke Tests of FMU">
 		<Label name="simulation-type:SIL" description="Applicable for Software-in-the-Loop simulation"/>
 		<Label name="os:Win64" description="Applicable for Windows 64-bit target"/>
 	</Related>
-	<Related type="application/x-srmd-meta-data" source="metadata/model.srmd" role="meta-data" description="SRMD Meta-Data" checksum="75254b2e76d255d0b1caaa1234008c33f448293c36560e8ed5549e8d6a175ef2" checksumAlgorithm="SHA-256"/>
+	<Related type="application/x-srmd-meta-data" source="metadata/model.srmd" role="meta-data" description="SRMD Meta-Data" checksum="75254b2e76d255d0b1caaa1234008c33f448293c36560e8ed5549e8d6a175ef2"/>
 </fmiReferences>

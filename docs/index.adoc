@@ -91,12 +91,6 @@ All information about the related files included with the FMU are contained in t
 |`\http://fmi-standard.org/fmi-ls-manifest`
 |`Layered Standard providing information on related files included in an FMU.`
 |String with a brief description of the layered standard that is suitable for display to users.
-
-|`checksumRequired`
-|
-|`true` or `false`
-|Optional boolean attribute, defaulting to `false`, that indicates whether every `<Related>` element in this manifest is expected to provide the `checksum` attribute, e.g. to fulfill fixity requirements for long term archiving.
-This attribute is informative; it is not enforced by the schema, so a consuming application that requires this guarantee has to validate it itself.
 |====
 
 Beside these attributes the root element `fmiReferences` contains the following elements:
@@ -157,12 +151,14 @@ No base requirements on supported URI schemes are given in this layered standard
 |Brief description of the related file that is suitable for display to users.
 
 |`checksum`
-|Optional hex-encoded digest of the related file, computed with the algorithm named by `checksumAlgorithm`.
-Allows an importer to verify that the related file has not been modified since the manifest was produced, e.g. to fulfill fixity requirements for long term archiving.
-If the enclosing `fmiReferences` element has `checksumRequired="true"`, every `<Related>` element is expected to provide this attribute.
+|This optional attribute provides a hex-encoded digest of the resource referenced by source, allowing a consumer to verify that the resource has not been modified since the manifest was produced, to detect accidental changes or misidentification.
+The digest is calculated using the algorithm indicated by the `checksumType` attribute.
 
-|`checksumAlgorithm`
-|Algorithm used to compute the `checksum` attribute. One of `SHA-256`, `SHA-384`, or `SHA-512`, defaulting to `SHA-256`. Ignored if `checksum` is absent.
+|`checksumType`
+|This optional attribute gives the algorithm for the calculation of the `checksum` attribute.
+It defaults to SHA3-256 if this attribute is omitted.
+Must be one of SHA3-224, SHA3-256, SHA3-384, SHA3-512 (as specified in FIPS 202), or - for legacy reasons - one of SHA-224, SHA-256, SHA-384, SHA-512 (as specified in FIPS 180-4, SHA-2 family).
+In future other digest algorithms might be supported.
 |====
 
 The `role` attribute is used to indicate the purpose of the related file.
