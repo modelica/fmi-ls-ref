@@ -93,7 +93,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="checksumType" type="xs:string" default="SHA3-256">
+        <xs:attribute name="checksumType" default="SHA3-256">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
                     This optional attribute gives the algorithm for the calculation of the
