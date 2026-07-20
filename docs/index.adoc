@@ -149,6 +149,16 @@ No base requirements on supported URI schemes are given in this layered standard
 
 |`description`
 |Brief description of the related file that is suitable for display to users.
+
+|`checksum`
+|This optional attribute provides a hex-encoded digest of the resource referenced by source, allowing a consumer to verify that the resource has not been modified since the manifest was produced, to detect accidental changes or misidentification.
+The digest is calculated using the algorithm indicated by the `checksumType` attribute.
+
+|`checksumType`
+|This optional attribute gives the algorithm for the calculation of the `checksum` attribute.
+It defaults to SHA3-256 if this attribute is omitted.
+Must be one of SHA3-224, SHA3-256, SHA3-384, SHA3-512 (as specified in FIPS 202), or - for legacy reasons - one of SHA-224, SHA-256, SHA-384, SHA-512 (as specified in FIPS 180-4, SHA-2 family).
+In future other digest algorithms might be supported.
 |====
 
 The `role` attribute is used to indicate the purpose of the related file.
